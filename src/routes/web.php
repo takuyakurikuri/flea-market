@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::post('/register',[AuthController::class,'store']);
+
+Route::post('/login',[AuthController::class,'login']);
+
+//Route::middleware('auth')->group(function(){ route::get('/',[AuthController::class, 'index']); });
+
+Route::get('/',function () { return view('index'); });
+
+Route::get('/mypage/profile',function () {
+    return view('profile');
 });
