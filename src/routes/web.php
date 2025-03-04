@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +18,16 @@ Route::post('/register',[AuthController::class,'store']);
 
 Route::post('/login',[AuthController::class,'login']);
 
-//Route::middleware('auth')->group(function(){ route::get('/',[AuthController::class, 'index']); });
-
-Route::get('/',function () { return view('index'); });
-
-Route::get('/mypage/profile',function () {
-    return view('profile');
+Route::middleware('auth')->group(function(){
+    Route::get('/sell',[ItemController::class,'sellRegister']);
+    Route::get('/mypage',[AuthController::class,'mypage']);
+    Route::get('/mypage/profile',[AuthController::class,'profile']);
 });
+
+Route::get('/',[ItemController::class, 'index']);
+
+route::post('/sell',[ItemController::class,'sell']);
+
+Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
+
+Route::get('/item/{item_id}',[ItemController::class,'itemDetail']);

@@ -33,4 +33,11 @@ class LoginRequest extends FormRequest
             'password' => ['required', 'min:8'],
         ];
     }
+    public function messages(){
+        return [
+            'email.required' =>'メールアドレスを入力して下さい',
+            'password.required' =>'パスワードを入力して下さい',
+            'password.min8' =>'パスワードは8桁以上で入力してください'
+        ];
+    }
 }

@@ -12,12 +12,30 @@
     @yield('css')
 </head>
 <body>
-    <header class="header">
-        <div class="header-row">
-            <div>
-                <img class="header__logo" src=""/>
+    <header class="bg-dark text-white py-2">
+        <div class="container">
+            <div class="d-flex justify-content-between  flex-wrap my-2 gap-3">
+                
+                <div class="d-flex align-items-center">
+                    {{--<img class="logo" src="{{ asset('images/logo.svg') }}" alt="COACHTECH">--}}
+                </div>
+            
+                @if (!Request::is(['register', 'login']))
+                    <form class="d-flex w-50 flex-grow-1">
+                        <input class="form-control mx-2" type="search" placeholder="なにをお探しですか？">
+                    </form>
+                        @if(Auth::check())
+                            <form action="/logout" method="post" class="d-flex align-items-center">
+                                @csrf
+                                <button class="btn btn-secondary me-2">ログアウト</button>
+                            </form>
+                        @else
+                            <a class="btn btn-secondary me-2" href="/login">ログイン</a>
+                        @endif
+                        <a class="btn btn-secondary me-2" href="/mypage">マイページ</a>
+                        <a class="btn btn-secondary" href="/sell">出品</a>
+                @endif
             </div>
-            @yield('header-on')
         </div>
     </header>
     <main>

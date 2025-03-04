@@ -9,21 +9,34 @@
 @endsection
 
 @section('header-on')
-        <a class="register__button-submit btn btn-outline-primary rounded-0" href="/register">会員登録はこちらから</a>
+        
 @endsection
 
 @section('content')
-<h2>ログイン</h2>
-<form action="/login" method="post">
-    @csrf
-    <div>
-        <label for="">メールアドレス</label>
-        <input type="text" name="email" id="">
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="login-container text-center">
+            <h2 class="mb-4 fw-bold">ログイン</h2>
+            <form action="/login" method="post">
+                @csrf
+                <div class="mb-3 text-start">
+                    <label for="email" class="form-label">メールアドレス</label>
+                    <input type="text" name="email" id="email" class="form-control" value="{{old('email')}}">
+                </div>
+                @error('email')
+                    {{$message}}
+                @enderror
+                <div class="mb-3 text-start">
+                    <label for="password" class="form-label">パスワード</label>
+                    <input type="password" name="password" id="password" class="form-control">
+                </div>
+                @error('password')
+                    {{$message}}
+                @enderror
+                <button type="submit" class="btn btn-danger rounded-0 w-100 py-2">ログインする</button>
+            </form>
+            <div class="mt-3">
+                <a href="/register" class="btn btn-outline-primary rounded-0 w-100">会員登録はこちら</a>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="">パスワード</label>
-        <input type="password" name="password" id="">
-    </div>
-    <button type="submit">ログイン</button>
-</form>
 @endsection
