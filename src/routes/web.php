@@ -31,3 +31,7 @@ route::post('/sell',[ItemController::class,'sell']);
 Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
 
 Route::get('/item/{item_id}',[ItemController::class,'itemDetail']);
+
+Route::post('/item/{item_id}',[ItemController::class,'addFavorite']);
+
+Route::delete('/item/{item_id}',[ItemController::class,'destroyFavorite']);

@@ -38,9 +38,9 @@ class ItemsSeeder extends Seeder
         }
         
         $param = [
-            'Product_image_path' => 'images/Armani+Mens+Clock.jpg',
+            'item_image_path' => 'images/Armani+Mens+Clock.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'1',
+            'item_category_id' =>'1',
             'condition_id' => '1',
             'product_name' => '腕時計',
             'product_brand' => 'armani',
@@ -52,9 +52,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/HDD+Hard+Disk.jpg',
+            'item_image_path' => 'images/HDD+Hard+Disk.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'2',
+            'item_category_id' =>'2',
             'condition_id' => '2',
             'product_name' => 'HDD',
             'product_brand' => 'toshiba',
@@ -66,9 +66,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/iLoveIMG+d.jpg',
+            'item_image_path' => 'images/iLoveIMG+d.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'3',
+            'item_category_id' =>'3',
             'condition_id' => '3',
             'product_name' => '玉ねぎ3束',
             'product_brand' => 'nagano',
@@ -80,9 +80,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
+            'item_image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'4',
+            'item_category_id' =>'4',
             'condition_id' => '4',
             'product_name' => '革靴',
             'product_brand' => 'edwin',
@@ -94,9 +94,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Living+Room+Laptop.jpg',
+            'item_image_path' => 'images/Living+Room+Laptop.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'5',
+            'item_category_id' =>'5',
             'condition_id' => '1',
             'product_name' => 'ノートPC',
             'product_brand' => 'apple',
@@ -108,9 +108,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Music+Mic+4632231.jpg',
+            'item_image_path' => 'images/Music+Mic+4632231.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'6',
+            'item_category_id' =>'6',
             'condition_id' => '2',
             'product_name' => 'マイク',
             'product_brand' => 'hitachi',
@@ -122,9 +122,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Purse+fashion+pocket.jpg',
+            'item_image_path' => 'images/Purse+fashion+pocket.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'7',
+            'item_category_id' =>'7',
             'condition_id' => '3',
             'product_name' => 'ショルダーバッグ',
             'product_brand' => 'furla',
@@ -136,9 +136,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Tumbler+souvenir.jpg',
+            'item_image_path' => 'images/Tumbler+souvenir.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'8',
+            'item_category_id' =>'8',
             'condition_id' => '4',
             'product_name' => 'タンブラー',
             'product_brand' => 'zojirushi',
@@ -150,9 +150,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
+            'item_image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'9',
+            'item_category_id' =>'9',
             'condition_id' => '1',
             'product_name' => 'コーヒーミル',
             'product_brand' => 'delonghi',
@@ -164,9 +164,9 @@ class ItemsSeeder extends Seeder
         DB::table('items')->insert($param);
 
         $param = [
-            'Product_image_path' => 'images/外出メイクアップセット.jpg',
+            'item_image_path' => 'images/外出メイクアップセット.jpg',
             'exhibitor_id' => '1000',
-            'product_category_id' =>'10',
+            'item_category_id' =>'10',
             'condition_id' => '2',
             'product_name' => 'メイクセット',
             'product_brand' => 'canmaketokyo',

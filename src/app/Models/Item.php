@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Condition;
-use App\Models\Product_Category;
+use App\Models\Item_Category;
 
 class Item extends Model
 {
     use HasFactory;
     protected $fillable = [
         'exhibitor_id',
-        'product_image_path',
-        'product_category_id',
+        'item_image_path',
+        'item_category_id',
         'condition_id',
         'product_name',
         'product_brand',
         'product_detail',
-        'product_price'
+        'product_price',
+        'purchase_id'
     ];
 
     public function exhibitor(){
@@ -30,7 +31,15 @@ class Item extends Model
         return $this->belongsTo(Condition::class);
     }
 
-    public function product_category(){
-        return $this->belongsTo(ProductCategory::class);
+    public function item_category(){
+        return $this->belongsTo(ItemCategory::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(comment::class);
+    }
+
+    public function favorites(){
+        return $this->hasMany(favorite::class);
     }
 }

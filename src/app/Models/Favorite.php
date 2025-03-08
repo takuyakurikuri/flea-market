@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemCategory extends Model
+class Favorite extends Model
 {
     use HasFactory;
-    protected $table = 'item_categories';
+
+    protected $fillable = [
+        'item_id',
+        'user_id'
+    ];
 }

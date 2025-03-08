@@ -13,31 +13,34 @@
 </head>
 <body>
     <header class="bg-dark text-white py-2">
-        <div class="container">
-            <div class="d-flex justify-content-between  flex-wrap my-2 gap-3">
-                
-                <div class="d-flex align-items-center">
-                    {{--<img class="logo" src="{{ asset('images/logo.svg') }}" alt="COACHTECH">--}}
-                </div>
+    <div class="container">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-2 gap-3">
             
-                @if (!Request::is(['register', 'login']))
-                    <form class="d-flex w-50 flex-grow-1">
-                        <input class="form-control mx-2" type="search" placeholder="なにをお探しですか？">
-                    </form>
-                        @if(Auth::check())
-                            <form action="/logout" method="post" class="d-flex align-items-center">
-                                @csrf
-                                <button class="btn btn-secondary me-2">ログアウト</button>
-                            </form>
-                        @else
-                            <a class="btn btn-secondary me-2" href="/login">ログイン</a>
-                        @endif
-                        <a class="btn btn-secondary me-2" href="/mypage">マイページ</a>
-                        <a class="btn btn-secondary" href="/sell">出品</a>
-                @endif
+            <div class="d-flex align-items-center">
+                <img class="logo" src="{{ asset('images/logo.svg') }}" alt="COACHTECH">
             </div>
+        
+            @if (!Request::is(['register', 'login']))
+                <form class="d-flex w-50 w-md-25 flex-grow-1">
+                    <input class="form-control mx-2" type="search" placeholder="なにをお探しですか？">
+                </form>
+                
+                <div class="d-flex align-items-center gap-2 gap-md-3">
+                    @if(Auth::check())
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button class="btn btn-secondary btn-fixed">ログアウト</button>
+                        </form>
+                    @else
+                        <a class="btn btn-secondary btn-fixed" href="/login">ログイン</a>
+                    @endif
+                    <a class="btn btn-secondary btn-fixed" href="/mypage">マイページ</a>
+                    <a class="btn btn-secondary btn-fixed" href="/sell">出品</a>
+                </div>
+            @endif
         </div>
-    </header>
+    </div>
+</header>
     <main>
         @yield('content')
     </main>

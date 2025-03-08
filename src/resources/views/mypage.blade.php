@@ -48,7 +48,7 @@
             @foreach ($items as $item)
                 <div class="col">
                     <div class="card">
-                        <img class="card-img-top p-2" src="{{ asset('storage/' . $item->product_image_path) }}"
+                        <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}"
                             alt="{{ $item->product_name }}">
                         <div class="card-body text-center">
                             <p class="card-text">{{ $item->product_name }}</p>
