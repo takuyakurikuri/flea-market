@@ -38,38 +38,52 @@ class ItemController extends Controller
         'item_image_path' => $item_image_path,
         'item_category_id' => $request['item_category_id'],
         'condition_id' => $request['condition_id'],
-        'product_name' => $request['product_name'],
-        'product_brand' => $request['product_brand'],
-        'product_detail' => $request['product_detail'],
-        'product_price' => $request['product_price']
+        'item_name' => $request['item_name'],
+        'item_brand' => $request['item_brand'],
+        'item_detail' => $request['item_detail'],
+        'item_price' => $request['item_price']
         ]);
 
         return redirect('/')->with('success','商品の出品に成功しました');
     }
 
     public function itemDetail($item_id) {
-        $item = Item::findOrFail($item_id);
+        $item = Item::withCount('favorites')->find($item_id);
+        $comments_count = Item::withCount('comments')->find($item_id);
+        $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
         $isFavorite = Auth::check() ? favorite::where('item_id',$item_id)->where('user_id',Auth::id())->exists() : false;
-        return view('detail',compact('item','isFavorite'));
+
+        return view('detail',compact('item','isFavorite','comments','comments_count'));
     }
 
     public function addFavorite(Request $request){
         Favorite::create([
             'user_id' => Auth::id(),
-            'product_id' => $request->item_id
+            'item_id' => $request->item_id
         ]);
 
-        return redirect('/item/{item_id}')->with('message','お気に入りに追加しました');
+        return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','お気に入り登録をしました');
     }
 
     public function destroyFavorite(Request $request){
-        favorite::find($request->id)->delete();
+        $isFavorite =favorite::where('item_id',$request->item_id)->where('user_id',Auth::id())->first();
+
+        if($isFavorite) {
+            $isFavorite->delete();
+            return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','お気に入りを解除しました');
+        }
+
+        return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','お気に入りが見つかりませんでした');
     }
 
-    public function comment(Request $request){
+    public function addComment(Request $request){
         comment::create([
-            
+            'user_id' => Auth::id(),
+            'item_id' => $request->item_id,
+            'content' =>$request->comment
         ]);
+
+        return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','コメントを送信しました');
     }
 
 }

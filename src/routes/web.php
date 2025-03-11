@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/sell',[ItemController::class,'sellRegister']);
     Route::get('/mypage',[AuthController::class,'mypage']);
     Route::get('/mypage/profile',[AuthController::class,'profile']);
+    Route::post('/item/{item_id}/comment',[ItemController::class,'addComment']);
 });
 
 Route::get('/',[ItemController::class, 'index']);
@@ -30,7 +31,7 @@ route::post('/sell',[ItemController::class,'sell']);
 
 Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
 
-Route::get('/item/{item_id}',[ItemController::class,'itemDetail']);
+Route::get('/item/{item_id}',[ItemController::class,'itemDetail'])->name('item.detail');
 
 Route::post('/item/{item_id}',[ItemController::class,'addFavorite']);
 

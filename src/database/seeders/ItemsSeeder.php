@@ -42,10 +42,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'1',
             'condition_id' => '1',
-            'product_name' => '腕時計',
-            'product_brand' => 'armani',
-            'product_detail' => 'スタイリッシュなデザインのメンズ腕時計',
-            'product_price' => '15000',
+            'item_name' => '腕時計',
+            'item_brand' => 'armani',
+            'item_detail' => 'スタイリッシュなデザインのメンズ腕時計',
+            'item_price' => '15000',
             
         ];
 
@@ -56,10 +56,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'2',
             'condition_id' => '2',
-            'product_name' => 'HDD',
-            'product_brand' => 'toshiba',
-            'product_detail' => '高速で信頼性の高いハードディスク',
-            'product_price' => '5000',
+            'item_name' => 'HDD',
+            'item_brand' => 'toshiba',
+            'item_detail' => '高速で信頼性の高いハードディスク',
+            'item_price' => '5000',
             
         ];
 
@@ -70,10 +70,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'3',
             'condition_id' => '3',
-            'product_name' => '玉ねぎ3束',
-            'product_brand' => 'nagano',
-            'product_detail' => '新鮮な玉ねぎ3束のセット',
-            'product_price' => '300',
+            'item_name' => '玉ねぎ3束',
+            'item_brand' => 'nagano',
+            'item_detail' => '新鮮な玉ねぎ3束のセット',
+            'item_price' => '300',
             
         ];
 
@@ -84,10 +84,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'4',
             'condition_id' => '4',
-            'product_name' => '革靴',
-            'product_brand' => 'edwin',
-            'product_detail' => 'クラシックなデザインの革靴',
-            'product_price' => '4000',
+            'item_name' => '革靴',
+            'item_brand' => 'edwin',
+            'item_detail' => 'クラシックなデザインの革靴',
+            'item_price' => '4000',
             
         ];
 
@@ -98,10 +98,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'5',
             'condition_id' => '1',
-            'product_name' => 'ノートPC',
-            'product_brand' => 'apple',
-            'product_detail' => '高性能なノートパソコン',
-            'product_price' => '45000',
+            'item_name' => 'ノートPC',
+            'item_brand' => 'apple',
+            'item_detail' => '高性能なノートパソコン',
+            'item_price' => '45000',
             
         ];
 
@@ -112,10 +112,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'6',
             'condition_id' => '2',
-            'product_name' => 'マイク',
-            'product_brand' => 'hitachi',
-            'product_detail' => '高音質のレコーディング用マイク',
-            'product_price' => '8000',
+            'item_name' => 'マイク',
+            'item_brand' => 'hitachi',
+            'item_detail' => '高音質のレコーディング用マイク',
+            'item_price' => '8000',
             
         ];
 
@@ -126,10 +126,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'7',
             'condition_id' => '3',
-            'product_name' => 'ショルダーバッグ',
-            'product_brand' => 'furla',
-            'product_detail' => 'おしゃれなショルダーバッグ',
-            'product_price' => '3500',
+            'item_name' => 'ショルダーバッグ',
+            'item_brand' => 'furla',
+            'item_detail' => 'おしゃれなショルダーバッグ',
+            'item_price' => '3500',
             
         ];
 
@@ -140,10 +140,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'8',
             'condition_id' => '4',
-            'product_name' => 'タンブラー',
-            'product_brand' => 'zojirushi',
-            'product_detail' => '使いやすいタンブラー',
-            'product_price' => '500',
+            'item_name' => 'タンブラー',
+            'item_brand' => 'zojirushi',
+            'item_detail' => '使いやすいタンブラー',
+            'item_price' => '500',
             
         ];
 
@@ -154,10 +154,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'9',
             'condition_id' => '1',
-            'product_name' => 'コーヒーミル',
-            'product_brand' => 'delonghi',
-            'product_detail' => '手動のコーヒーミル',
-            'product_price' => '4000',
+            'item_name' => 'コーヒーミル',
+            'item_brand' => 'delonghi',
+            'item_detail' => '手動のコーヒーミル',
+            'item_price' => '4000',
             
         ];
 
@@ -168,10 +168,10 @@ class ItemsSeeder extends Seeder
             'exhibitor_id' => '1000',
             'item_category_id' =>'10',
             'condition_id' => '2',
-            'product_name' => 'メイクセット',
-            'product_brand' => 'canmaketokyo',
-            'product_detail' => '便利なメイクアップセット',
-            'product_price' => '2500',
+            'item_name' => 'メイクセット',
+            'item_brand' => 'canmaketokyo',
+            'item_detail' => '便利なメイクアップセット',
+            'item_price' => '2500',
             
         ];
 

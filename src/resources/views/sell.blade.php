@@ -66,19 +66,19 @@
             <!-- 商品名 -->
             <div class="mb-3">
                 <label class="form-label">商品名</label>
-                <input type="text" name="product_name" class="form-control">
+                <input type="text" name="item_name" class="form-control">
             </div>
             
             <!-- ブランド名 -->
             <div class="mb-3">
                 <label class="form-label">ブランド名</label>
-                <input type="text" name="product_brand" class="form-control">
+                <input type="text" name="item_brand" class="form-control">
             </div>
             
             <!-- 商品の説明 -->
             <div class="mb-3">
                 <label class="form-label">商品の説明</label>
-                <textarea name="product_detail" class="form-control" rows="4"></textarea>
+                <textarea name="item_detail" class="form-control" rows="4"></textarea>
             </div>
             
             <!-- 販売価格 -->
@@ -86,7 +86,7 @@
                 <label class="form-label">販売価格</label>
                 <div class="input-group">
                     <span class="input-group-text">￥</span>
-                    <input type="number" name="product_price" class="form-control">
+                    <input type="number" name="item_price" class="form-control">
                 </div>
             </div>
             

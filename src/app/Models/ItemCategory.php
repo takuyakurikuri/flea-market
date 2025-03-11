@@ -9,4 +9,5 @@ class ItemCategory extends Model
 {
     use HasFactory;
     protected $table = 'item_categories';
+
 }

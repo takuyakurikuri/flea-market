@@ -16,10 +16,10 @@ class Item extends Model
         'item_image_path',
         'item_category_id',
         'condition_id',
-        'product_name',
-        'product_brand',
-        'product_detail',
-        'product_price',
+        'item_name',
+        'item_brand',
+        'item_detail',
+        'item_price',
         'purchase_id'
     ];
 

@@ -17,12 +17,12 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->integer('exhibitor_id');
             $table->string('item_image_path');
-            $table->foreignId('item_category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('item_category_id')->constrained()->cascadeOnDelete();//中間テーブル設定後削除
             $table->foreignId('condition_id')->constrained()->cascadeOnDelete();
-            $table->string('product_name');
-            $table->string('product_brand');
-            $table->text('product_detail');
-            $table->integer('product_price');
+            $table->string('item_name');
+            $table->string('item_brand');
+            $table->text('item_detail');
+            $table->integer('item_price');
             $table->timestamps();
         });
     }

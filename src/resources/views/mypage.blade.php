@@ -49,9 +49,9 @@
                 <div class="col">
                     <div class="card">
                         <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}"
-                            alt="{{ $item->product_name }}">
+                            alt="{{ $item->item_name }}">
                         <div class="card-body text-center">
-                            <p class="card-text">{{ $item->product_name }}</p>
+                            <p class="card-text">{{ $item->item_name }}</p>
                         </div>
                     </div>
                 </div>

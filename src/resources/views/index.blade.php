@@ -29,10 +29,10 @@
                 <a href="/item/{{$item->id}}" class="text-decoration-none text-dark">
                     <div class="card m-2 item-card" style="width: 200px;">
                         <div class="image-container d-flex align-items-center justify-content-center">
-                            <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}" alt="{{$item->product_name}}">
+                            <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}" alt="{{$item->item_name}}">
                         </div>
                         <div class="card-body text-center">
-                            <p class="card-text">{{$item->product_name}}</p>
+                            <p class="card-text">{{$item->item_name}}</p>
                         </div>
                     </div>
                 </a>
@@ -44,14 +44,14 @@
     @foreach ($items as $item)
         <div>
             <img src="{{$item['product_image']}}" alt="">
-            <p>{{$item['product_name']}}</p>
+            <p>{{$item['item_name']}}</p>
         </div>
     @endforeach
 @else /*マイリスト*/
         @foreach ($items as $item)
             <div>
                 <img src="{{$item['product_image']}}" alt="">
-                <p>{{$item['product_name']}}</p>
+                <p>{{$item['item_name']}}</p>
             </div>
     @endforeach
 @endif--}}
