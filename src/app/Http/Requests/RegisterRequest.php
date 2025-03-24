@@ -41,6 +41,7 @@ class RegisterRequest extends FormRequest
         return [
             'name.required' =>'お名前を入力して下さい',
             'email.required' =>'メールアドレスを入力して下さい',
+            'email.unique' =>'このメールアドレスは既に使われています',
             'password.required' =>'パスワードを入力して下さい',
             'password.min' =>'パスワードを8桁以上で入力して下さい',
             'password.confirmed' => 'パスワードと一致しません'

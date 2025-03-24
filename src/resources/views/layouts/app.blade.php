@@ -16,13 +16,15 @@
     <div class="container">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-2 gap-3">
             
-            <div class="d-flex align-items-center">
-                <img class="logo" src="{{ asset('images/logo.svg') }}" alt="COACHTECH">
-            </div>
+            <a href="/">
+                <div class="d-flex align-items-center">
+                    <img class="logo" src="{{ asset('images/logo.svg') }}" alt="COACHTECH">
+                </div>
+            </a>
         
             @if (!Request::is(['register', 'login']))
-                <form class="d-flex w-50 w-md-25 flex-grow-1">
-                    <input class="form-control mx-2" type="search" placeholder="なにをお探しですか？">
+                <form class="d-flex w-50 w-md-25 flex-grow-1" action="/search" method="get">
+                    <input class="form-control mx-2" name="keyword" type="text" placeholder="なにをお探しですか？">
                 </form>
                 
                 <div class="d-flex align-items-center gap-2 gap-md-3">

@@ -11,12 +11,15 @@ class Profile extends Model
     protected $fillable = [
         'user_id',
         'user_image_path',
-        'zipcode',
-        'address',
-        'building'
+        'address_id'
+
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function address(){
+        return $this->belongsTo(address::class);
     }
 }

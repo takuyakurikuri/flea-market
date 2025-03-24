@@ -26,8 +26,9 @@ class ItemRequest extends FormRequest
         return [
             'exhibitor_id'=>['required'],
             'item_image_path'=>['required','string','mimes:jpg,png'],
-            'item_category_id'=>['required'],
-            'condition_id'=>['required'],
+            //'item_category_id'=>['required'],
+            //'condition_id'=>['required'],
+            'condition'=>['required'],
             'item_name'=>['required','string'],
             'item_brand'=>['required'],
             'item_detail'=>['required','max:255'],

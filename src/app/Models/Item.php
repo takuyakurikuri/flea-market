@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Condition;
-use App\Models\Item_Category;
+use App\Models\CategoryItem;
 
 class Item extends Model
 {
@@ -14,8 +14,9 @@ class Item extends Model
     protected $fillable = [
         'exhibitor_id',
         'item_image_path',
-        'item_category_id',
-        'condition_id',
+        //'item_category_id',
+        //'condition_id',
+        'condition',
         'item_name',
         'item_brand',
         'item_detail',
@@ -27,19 +28,33 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function condition(){
-        return $this->belongsTo(Condition::class);
+    //public function condition(){
+    //    return $this->belongsTo(Condition::class);
+    //}
+
+    public function category_item(){
+        return $this->hasMany(CategoryItem::class);
     }
 
-    public function item_category(){
-        return $this->belongsTo(ItemCategory::class);
+    public function categories(){
+        return $this->belongsToMany(Category::class);
     }
 
     public function comments(){
-        return $this->hasMany(comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function favorites(){
-        return $this->hasMany(favorite::class);
+        return $this->belongsToMany(User::class, 'favorites', 'item_id', 'user_id');
+    }
+
+    public function purchase(){
+        return $this->belongsTo(Purchase::class);
+    }
+
+    public function scopeKeywordSearch($query,$keyword){
+        if(!empty($keyword)){
+            $query->where('item_name','like','%'.$keyword.'%');
+        }
     }
 }

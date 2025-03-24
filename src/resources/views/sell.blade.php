@@ -44,7 +44,7 @@
                 <div class="d-flex flex-wrap gap-2">
                     @foreach ($categories as $category)
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="item_category_id" value="{{$category->id}}" id="category{{$category->id}}">
+                            <input class="form-check-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="category{{$category->id}}">
                             <label class="form-check-label badge bg-danger text-white" for="category{{$category->id}}">{{$category->content}}</label>
                         </div>
                     @endforeach
@@ -54,10 +54,16 @@
             <!-- 商品の状態 -->
             <div class="mb-3">
                 <label class="form-label">商品の状態</label>
-                <select name="condition_id" class="form-select">
+                {{--<select name="condition_id" class="form-select">
                     @foreach ($conditions as $condition)
                         <option value="{{$condition->id}}">{{$condition->content}}</option>
                     @endforeach
+                </select>--}}
+                <select name="condition" class="form-select">
+                    <option value="1">良好</option>
+                    <option value="2">目立った傷や汚れなし</option>
+                    <option value="3">やや傷や汚れあり</option>
+                    <option value="4">状態が悪い</option>
                 </select>
             </div>
             

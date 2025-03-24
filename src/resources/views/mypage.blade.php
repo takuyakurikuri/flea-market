@@ -35,7 +35,7 @@
 
         <div class="d-flex border-bottom pb-2">
             <form action="/mypage" method="get" name="tab" value="sell" class="me-3">
-                <input type="hidden" value="">
+                <input type="hidden" name="tab" value="sell">
                 <button class="btn btn-link text-decoration-none">出品した商品</button>
             </form>
             <form action="/mypage" method="get">

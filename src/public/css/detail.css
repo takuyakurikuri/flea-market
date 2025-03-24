@@ -2,3 +2,16 @@ a{
     text-decoration: none;
     color: #000;
 }
+
+.icon {
+    width: 50%;
+    height: 50%;
+}
+
+.favorite {
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    outline: none !important;
+    appearance: none !important;
+}

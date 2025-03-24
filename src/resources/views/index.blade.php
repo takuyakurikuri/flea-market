@@ -17,9 +17,14 @@
                 <input type="hidden" value="">
                 <button class="btn btn-link text-decoration-none">おすすめ</button>
             </form>
-            <form action="/" method="get">
+            <form action="{{ request('keyword') ? '/search' : '/' }}" method="get">
                 <input type="hidden" name="tab" value="mylist">
-                <button class="btn btn-link text-decoration-none text-danger">マイリスト</button>
+                @if(Auth::check())
+                    <button class="btn btn-link text-decoration-none text-danger">マイリスト</button>
+                    <input type="hidden" name="keyword" value="{{ request('keyword') }}">
+                @else
+                    <a class="btn btn-link text-decoration-none text-danger" href="/login">マイリスト</a>
+                @endif
             </form>
         </div>
 
@@ -30,6 +35,9 @@
                     <div class="card m-2 item-card" style="width: 200px;">
                         <div class="image-container d-flex align-items-center justify-content-center">
                             <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}" alt="{{$item->item_name}}">
+                            @if ($item->purchase_id)
+                                <img class="soldout-overlay" src="{{ asset('images/soldout.png') }}" alt="soldout">
+                            @endif
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text">{{$item->item_name}}</p>

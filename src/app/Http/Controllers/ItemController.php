@@ -10,18 +10,27 @@ use App\Models\Condition;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Favorite;
 use App\Models\Comment;
+use App\Models\Category;
+use App\Models\CategoryItem;
 
 class ItemController extends Controller
 {
-    public function index() {
-        $items = Item::all();
+    public function index(Request $request) {
+        $tab = $request->query('tab');
+        if($tab == 'mylist' && Auth::check()){
+            $user = Auth::user();
+            $items = $user->favorites()->get();//エラーになるが、laravelの仕様が古いためと思われる
+        }
+        else {
+            $items = Item::all();
+        }
         return view('index',compact('items'));
     }
 
     public function sellRegister(){
-        $categories = ItemCategory::all();
-        $conditions = Condition::all();
-        return view('sell',compact('categories','conditions'));
+        $categories = Category::all();
+        //$conditions = Condition::all();
+        return view('sell',compact('categories'/*,'conditions'*/));
     }
 
     public function sell(Request $request) {
@@ -33,16 +42,20 @@ class ItemController extends Controller
         
         $user = Auth::user();
 
-        Item::create([
+        $item = Item::create([
         'exhibitor_id' => $user->id,
         'item_image_path' => $item_image_path,
-        'item_category_id' => $request['item_category_id'],
-        'condition_id' => $request['condition_id'],
+        //'item_category_id' => $request['item_category_id'],
+        //'condition_id' => $request['condition_id'],
+        'condition'=>$request['condition'],
         'item_name' => $request['item_name'],
         'item_brand' => $request['item_brand'],
         'item_detail' => $request['item_detail'],
         'item_price' => $request['item_price']
         ]);
+
+        $item->categories()->attach($request->category_id);
+
 
         return redirect('/')->with('success','商品の出品に成功しました');
     }
@@ -52,8 +65,9 @@ class ItemController extends Controller
         $comments_count = Item::withCount('comments')->find($item_id);
         $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
         $isFavorite = Auth::check() ? favorite::where('item_id',$item_id)->where('user_id',Auth::id())->exists() : false;
+        $item_categories = CategoryItem::where('item_id',$item_id)->get();
 
-        return view('detail',compact('item','isFavorite','comments','comments_count'));
+        return view('detail',compact('item','isFavorite','comments','comments_count','item_categories'));
     }
 
     public function addFavorite(Request $request){
@@ -84,6 +98,27 @@ class ItemController extends Controller
         ]);
 
         return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','コメントを送信しました');
+    }
+
+    public function search(Request $request){
+        $query = Item::query();
+
+        if($request->filled('keyword')){
+            $query->KeywordSearch($request->keyword);
+        }
+
+        if($request->tab === 'mylist'){
+            $query->whereHas('favorites', function($q)  use ($request){
+                $q->where('user_id',auth()->id());
+            });
+        }
+        
+        $items = $query->get();
+        return view('index',[
+            'items'=>$items,
+            'keyword'=>$request->keyword,
+            'tab'=>$request->tab ?? 'mylist'
+        ]);
     }
 
 }

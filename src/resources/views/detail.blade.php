@@ -45,22 +45,40 @@
                                 @csrf
                                 @method('delete')
                                 <input type="hidden" name="item_id" value="{{ $item->id }}">
-                                <button type="submit" class="me-3">★{{ $item->favorites_count }}</button>
+                                <button type="submit" class="me-3 d-flex align-items-center favorite">
+                                    <img class="icon me-1" src="{{ asset('images/togglestar.png') }}" alt="お気に入り解除する">
+                                    {{ $item->favorites_count }}
+                                </button>
                             </form>
                         @else
                             <form action="/item/{item_id}" method="post">
                                 @csrf
                                 <input type="hidden" name="item_id" value="{{ $item->id }}">
-                                <button type="submit" class="me-3">☆{{ $item->favorites_count }}</button>
+                                <button type="submit" class="me-3 d-flex align-items-center favorite">
+                                    <img class="icon me-1" src="{{ asset('images/addstar.png') }}" alt="お気に入り登録する">
+                                    {{ $item->favorites_count }}
+                                </button>
                             </form>
                         @endif
                     @else
-                        <a href="/login" class=""><span class="me-3 ">★{{ $item->favorites_count }}</span></a>
+                        <a href="/login" class="">
+                            <span class="me-3 d-flex align-items-center">
+                                <img class="icon me-1" src="{{ asset('images/addstar.png') }}" alt="会員登録をする">
+                               {{ $item->favorites_count }}
+                            </span>
+                        </a>
                     @endif
-                    <span>○ {{$comments_count->comments_count}}</span>
+                    <span class="d-flex align-items-center">
+                        <img class="icon me-1" src="{{ asset('images/comment.png') }}" alt="コメント数">
+                        {{$comments_count->comments_count}}
+                    </span>
                 </div>
-
-                <a href="#" class="btn btn-danger w-100">購入手続きへ</a>
+                @if (isset($item->purchase_id))
+                    <p class="btn btn-light w-100">売り切れました</p>
+                @else
+                    <a href="/item/{{$item->id}}/purchase" class="btn btn-danger w-100">購入手続きへ</a>
+                @endif
+                
 
                 <div class="mt-4">
                     <h3>商品説明</h3>
@@ -69,8 +87,34 @@
 
                 <div class="mt-3">
                     <h3>商品の情報</h3>
-                    <p><strong>カテゴリー:</strong>{{$item->item_category->content}}</p>
-                    <p><strong>商品の状態:</strong>{{$item->condition->content}}</p>
+                    <p>
+                        <strong class="fw-bold">カテゴリー</strong>
+                        @foreach ($item_categories as $item_category)
+                            <span class="badge rounded-pill bg-light text-dark border">
+                                {{$item_category->category->content}} 
+                            </span>
+                        @endforeach
+                    </p>
+                    <p>
+                        <strong>商品の状態 </strong>
+                        {{--{{$item->condition->content}}--}}
+                        @switch($item->condition)
+                            @case(1)
+                                良好
+                                @break
+                            @case(2)
+                                目立った傷や汚れなし
+                                @break
+                            @case(3)
+                                やや傷や汚れあり
+                                @break
+                            @case(4)
+                                状態が悪い
+                                @break
+                            @default
+                                情報なし
+                        @endswitch
+                    </p>
                 </div>
 
                 <div class="mt-4">

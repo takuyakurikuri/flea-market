@@ -1,0 +1,23 @@
+.product-image {
+    width: 150px;
+    height: 150px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.purchase-box {
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+.btn-purchase {
+    background-color: #ff6b6b;
+    color: white;
+    width: 100%;
+    font-size: 18px;
+}
+
+.main-content {
+    margin-top: 80px;
+}

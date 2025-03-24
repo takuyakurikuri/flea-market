@@ -24,43 +24,74 @@
 @endsection
 
 @section('content')
-<div class="container mt-5">
-    <h2 class="mb-4">プロフィール設定</h2>
-    <form action="/mypage/profile" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="user_id" value="{{$user->id}}">
-        <div class="mb-3">
-            <label for="profile_image_path" class="form-label">プロフィール画像</label>
-            
-            <!-- 画像プレビュー部分 -->
-            <div class="d-flex align-items-center gap-3">
-                <div id="imagePreview" class="rounded-circle border border-secondary" 
-                    style="width: 80px; height: 80px; background-color: #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                    <img id="previewImg" {{--src="{{ $user->profile->user_image_path ? asset('storage/' . $user->profile->user_image_path) : '' }}"--}} alt="" style="width: 100%; height: 100%; object-fit: cover; {{--{{ $user->profile->user_image_path ? '' : 'display: none;' }}--}}">
-                </div>
+<div class="container main-content mt-5">
+    <h2 class="text-center mb-4">プロフィール設定</h2>
 
-                <!-- ファイル選択ボタン -->
-                <label for="profile_image_path" class="btn btn-outline-danger">画像を選択する</label>
-                <input type="file" name="user_image_path" accept="image/*" class="form-control d-none" id="profile_image_path">
+    <form action="/mypage/profile" method="post" enctype="multipart/form-data" class="mx-auto col-md-6">
+        @csrf
+        @if ($user->profile)
+            @method('patch')
+        @endif
+        <input type="hidden" name="user_id" value="{{$user->id}}">
+
+        <!-- プロフィール画像 -->
+        <div class="text-center mb-3">
+            <label for="profile_image_path" class="form-label">プロフィール画像</label>
+            <div class="d-flex align-items-center justify-content-center">
+                <div id="imagePreview" class="rounded-circle border border-secondary d-flex align-items-center justify-content-center"
+                    style="width: 100px; height: 100px; background-color: #ddd; overflow: hidden;">
+                    @php
+                        $profileImagePath = optional($user->profile)->user_image_path;
+                    @endphp
+                    @if ($profileImagePath)
+                        <img id="previewImg" src="{{ asset('storage/' . $profileImagePath) }}" alt="プロフィール画像"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    @else
+                        <img id="previewImg" src="" alt="プロフィール画像"
+                            style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                    @endif
+                </div>
+                <input type="hidden" name="existing_user_image_path" value="{{ optional($user->profile)->user_image_path }}">
+                <label for="user_image_path" class="btn btn-outline-danger ms-5">画像を選択する</label>
+                <input type="file" name="user_image_path" accept="image/*" class="form-control d-none" id="user_image_path">
             </div>
         </div>
+
+        <!-- フォーム入力欄 -->
         <div class="mb-3">
             <label for="name" class="form-label">ユーザー名</label>
             <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $user->name) }}">
         </div>
-        <div class="mb-3">
+        {{--<div class="mb-3">
             <label for="zipcode" class="form-label">郵便番号</label>
-            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' {{--, $user->profile->zipcode--}}) }}">
+            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional($user->profile)->zipcode) }}">
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">住所</label>
-            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' {{--, $user->profile->address--}}) }}">
+            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional($user->profile)->address) }}">
         </div>
         <div class="mb-3">
             <label for="building" class="form-label">建物名</label>
-            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' {{--, $user->profile->building--}}) }}">
+            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional($user->profile)->building) }}">
+        </div>--}}
+
+        <div class="mb-3">
+            <label for="zipcode" class="form-label">郵便番号</label>
+            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional(optional($user->profile)->address)->zipcode) }}">
         </div>
-        <button type="submit" class="btn btn-danger">更新する</button>
+        <div class="mb-3">
+            <label for="address" class="form-label">住所</label>
+            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional(optional($user->profile)->address)->address) }}">
+        </div>
+        <div class="mb-3">
+            <label for="building" class="form-label">建物名</label>
+            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional(optional($user->profile)->address)->building) }}">
+        </div>
+
+        <!-- 更新ボタン -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger w-100 py-2">更新する</button>
+        </div>
     </form>
 </div>
 @endsection
