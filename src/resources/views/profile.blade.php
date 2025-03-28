@@ -52,6 +52,9 @@
                     @endif
                 </div>
                 <input type="hidden" name="existing_user_image_path" value="{{ optional($user->profile)->user_image_path }}">
+                @error('user_image_path')
+                    {{$message}}
+                @enderror
                 <label for="user_image_path" class="btn btn-outline-danger ms-5">画像を選択する</label>
                 <input type="file" name="user_image_path" accept="image/*" class="form-control d-none" id="user_image_path">
             </div>
@@ -61,6 +64,9 @@
         <div class="mb-3">
             <label for="name" class="form-label">ユーザー名</label>
             <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $user->name) }}">
+            @error('name')
+                {{$message}}
+            @enderror
         </div>
         {{--<div class="mb-3">
             <label for="zipcode" class="form-label">郵便番号</label>
@@ -78,14 +84,23 @@
         <div class="mb-3">
             <label for="zipcode" class="form-label">郵便番号</label>
             <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional(optional($user->profile)->address)->zipcode) }}">
+            @error('zipcode')
+                {{$message}}
+            @enderror
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">住所</label>
             <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional(optional($user->profile)->address)->address) }}">
+            @error('address')
+                {{$message}}
+            @enderror
         </div>
         <div class="mb-3">
             <label for="building" class="form-label">建物名</label>
             <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional(optional($user->profile)->address)->building) }}">
+            @error('building')
+                {{$message}}
+            @enderror
         </div>
 
         <!-- 更新ボタン -->

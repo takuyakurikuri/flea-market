@@ -16,10 +16,16 @@
             <div class="mb-3">
                 <label for="zipcode" class="form-label">郵便番号</label>
                 <input type="text" name="zipcode" id="zipcode" class="form-control">
+                @error('zipcode')
+                    {{$message}}
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">住所</label>
                 <input type="text" name="address" id="address" class="form-control">
+                @error('address')
+                    {{$message}}
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="building" class="form-label">建物名</label>

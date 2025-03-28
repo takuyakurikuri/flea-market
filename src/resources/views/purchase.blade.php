@@ -19,20 +19,18 @@
                         <h3 class="text-danger">¥{{number_format($item->item_price)}}</h3>
                     </div>
                 </div>
-
                 <hr>
-
                 <h4>支払い方法</h4>
                 <select name="payment-method" id="payment-method" class="form-select w-50" value="{{old('payment-method')}}">
                     <option value="">選択してください</option>
                     <option name="payment_method" value="1">カード支払い</option>
                     <option name="payment_method" value="2">コンビニ払い</option>
                 </select>
-
+                @error('payment_method')
+                    {{$message}}
+                @enderror
                 <hr>
-
                 <h4>配送先</h4>
-                
                     @if (session('changeAddress'))
                         <p>〒{{session('changeAddress.zipcode')}}<br>
                         {{session('changeAddress.address')}} {{session('changeAddress.building')}}
@@ -66,6 +64,11 @@
                     @endif
                     <input name="payment_method" type="hidden" id="hidden-payment-method" value="">
                     <button type="submit" class="btn btn-purchase mt-3">購入する</button>
+                </form>
+                <form action="/item/{{$item->id}}/checkout" method="post">
+                    @csrf
+                    <input type="hidden" name="purchase_item_id" value="{{$item->id}}">
+                    <button type="submit" class="btn btn-purchase mt-3">Stripeで購入</button>
                 </form>
             </div>
         </div>

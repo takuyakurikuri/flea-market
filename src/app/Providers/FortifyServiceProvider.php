@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use App\Actions\Auth\CustomAttemptToAuthenticate;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Laravel\Fortify\Http\Responses\LoginResponse;
+use App\Http\Responses\CustomLoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -25,7 +28,8 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return redirect('/mypage/profile');
+                //return redirect('/mypage/profile');
+                return redirect('/email/verify');
             }
         });
     }
@@ -42,11 +46,14 @@ class FortifyServiceProvider extends ServiceProvider
         //    return Limit::perMinute(5)->by($request->session()->get('login.id'));
         //});
 
-        Fortify::authenticateThrough(function ($request) {
-        return array_filter([
-            CustomAttemptToAuthenticate::class, // カスタム認証クラス
-        ]);
-    });
+        //以下いらないかも
+        //Fortify::authenticateThrough(function ($request) {
+        //    return array_filter([
+        //        EnsureEmailIsVerified::class, //メール認証の追加
+        //        CustomAttemptToAuthenticate::class, // カスタム認証クラス
+        //    ]);
+        //});
+
 
         Fortify::registerView(function(){
             return view('auth.register');
@@ -54,5 +61,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function(){
             return view('auth.login');
         });
+
+        Fortify::verifyEmailView(function(){
+            return view('auth.mail_verification');
+        });
+
+        $this->app->singleton(LoginResponse::class, CustomLoginResponse::class);
     }
 }

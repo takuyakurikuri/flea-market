@@ -12,6 +12,8 @@ use App\Models\Favorite;
 use App\Models\Comment;
 use App\Models\Category;
 use App\Models\CategoryItem;
+use App\Http\Requests\CommentRequest;
+use App\Http\Requests\ExhibitionRequest;
 
 class ItemController extends Controller
 {
@@ -33,7 +35,7 @@ class ItemController extends Controller
         return view('sell',compact('categories'/*,'conditions'*/));
     }
 
-    public function sell(Request $request) {
+    public function sell(ExhibitionRequest $request) {
         $item_image_path = null;
         if ($request->hasFile('item_image_path')) {
             // 画像を 'storage/app/public/images' に保存し、保存されたパスを取得
@@ -45,8 +47,6 @@ class ItemController extends Controller
         $item = Item::create([
         'exhibitor_id' => $user->id,
         'item_image_path' => $item_image_path,
-        //'item_category_id' => $request['item_category_id'],
-        //'condition_id' => $request['condition_id'],
         'condition'=>$request['condition'],
         'item_name' => $request['item_name'],
         'item_brand' => $request['item_brand'],
@@ -90,7 +90,7 @@ class ItemController extends Controller
         return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','お気に入りが見つかりませんでした');
     }
 
-    public function addComment(Request $request){
+    public function addComment(CommentRequest $request){
         comment::create([
             'user_id' => Auth::id(),
             'item_id' => $request->item_id,

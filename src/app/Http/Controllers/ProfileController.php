@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Address;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Item;
+use App\Http\Requests\AddressRequest;
 
 class ProfileController extends Controller
 {
@@ -15,7 +17,19 @@ class ProfileController extends Controller
         return view('profile' ,compact('user'));
     }
 
-    public function profileRegister(Request $request) {
+    public function mypage(Request $request){
+        if($request->tab == 'buy' && Auth::check()){
+            $user = Auth::user();
+            $items = auth()->user()->purchaseItem()->get();
+        }
+        else{
+            $user = Auth::user();
+            $items = Item::where('exhibitor_id',$user->id)->get();
+        }
+        return view('mypage' ,compact('items','user'));
+    }
+
+    public function profileRegister(AddressRequest $request) {
         $user_image_path = null;
         if ($request->hasFile('user_image_path')) {
             // 画像を 'storage/app/public/images' に保存し、保存されたパスを取得
@@ -27,20 +41,21 @@ class ProfileController extends Controller
             'address' => $request['address'],
             'building' => $request['building'],
         ]);
-        
+
         Profile::create([
             'user_id' => $request['user_id'],
             'user_image_path' => $user_image_path,
             'address_id' => $address->id
-            //'zipcode' => $request['zipcode'],
-            //'address' => $request['address'],
-            //'building' => $request['building'],
+        ]);
+
+        User::find($request->user_id)->update([
+            'name' => $request['name'],
         ]);
 
         return redirect('/mypage')->with('success','プロフィール登録が完了しました');
     }
 
-    public function modifyProfile(Request $request){
+    public function modifyProfile(AddressRequest $request){
 
         $user_image_path = null;
         if ($request->hasFile('user_image_path')) {
@@ -53,9 +68,6 @@ class ProfileController extends Controller
 
         Profile::find($request->user_id)->update([
             'user_image_path' => $user_image_path,
-            //'zipcode' => $request['zipcode'],
-            //'address' => $request['address'],
-            //'building' => $request['building'],
         ]);
 
         $profile = Profile::find($request->user_id);

@@ -138,6 +138,9 @@
                         @csrf
                         <input type="hidden" name="item_id" value="{{ $item->id }}">
                         <input  type="text" name="comment" class="form-control" rows="3">
+                        @error('content')
+                            {{$message}}
+                        @enderror
                         <button class="btn btn-danger w-100 mt-2">コメントを送信する</button>
                     </form>
                 </div>

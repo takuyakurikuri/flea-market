@@ -26,7 +26,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="d-flex justify-content-center align-items-center gap-3">
-            <img src="{{ asset('storage/' . $user->profile->user_image_path) }}" alt="画像が読み込めません" class="rounded-circle"
+            <img src="{{ asset('storage/' . $user->profile->user_image_path) }}" alt="画像なし" class="rounded-circle"
                 width="100" height="100">
             <h2 class="user-name mb-0">{{ $user->name }}</h2>
             <pre>     </pre>
@@ -47,13 +47,15 @@
         <div class="row row-cols-2 row-cols-md-4 g-3 mt-3">
             @foreach ($items as $item)
                 <div class="col">
-                    <div class="card">
-                        <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}"
-                            alt="{{ $item->item_name }}">
-                        <div class="card-body text-center">
-                            <p class="card-text">{{ $item->item_name }}</p>
+                    <a href="/item/{{$item->id}}" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="{{ asset('storage/' . $item->item_image_path) }}"
+                                alt="{{ $item->item_name }}">
+                            <div class="card-body text-center">
+                                <p class="card-text">{{ $item->item_name }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>

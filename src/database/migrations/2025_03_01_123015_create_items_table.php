@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             //$table->foreignId('condition_id')->constrained()->cascadeOnDelete();//コンディションのテーブル削除によりコメントアウト
             $table->integer('condition');
             $table->string('item_name');
-            $table->string('item_brand');
+            $table->string('item_brand')->nullable();
             $table->text('item_detail');
             $table->integer('item_price');
             $table->string('purchase_id')->nullable();
