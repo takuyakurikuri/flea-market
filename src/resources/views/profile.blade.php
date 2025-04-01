@@ -29,7 +29,7 @@
 
     <form action="/mypage/profile" method="post" enctype="multipart/form-data" class="mx-auto col-md-6">
         @csrf
-        @if ($user->profile)
+        @if ($user->address)
             @method('patch')
         @endif
         <input type="hidden" name="user_id" value="{{$user->id}}">
@@ -41,7 +41,7 @@
                 <div id="imagePreview" class="rounded-circle border border-secondary d-flex align-items-center justify-content-center"
                     style="width: 100px; height: 100px; background-color: #ddd; overflow: hidden;">
                     @php
-                        $profileImagePath = optional($user->profile)->user_image_path;
+                        $profileImagePath = $user->image_path;
                     @endphp
                     @if ($profileImagePath)
                         <img id="previewImg" src="{{ asset('storage/' . $profileImagePath) }}" alt="プロフィール画像"
@@ -51,12 +51,12 @@
                             style="width: 100%; height: 100%; object-fit: cover; display: none;">
                     @endif
                 </div>
-                <input type="hidden" name="existing_user_image_path" value="{{ optional($user->profile)->user_image_path }}">
-                @error('user_image_path')
+                <input type="hidden" name="existing_image_path" value="{{ $user->image_path }}">
+                @error('image_path')
                     {{$message}}
                 @enderror
-                <label for="user_image_path" class="btn btn-outline-danger ms-5">画像を選択する</label>
-                <input type="file" name="user_image_path" accept="image/*" class="form-control d-none" id="user_image_path">
+                <label for="image_path" class="btn btn-outline-danger ms-5">画像を選択する</label>
+                <input type="file" name="image_path" accept="image/*" class="form-control d-none" id="image_path">
             </div>
         </div>
 
@@ -83,27 +83,26 @@
 
         <div class="mb-3">
             <label for="zipcode" class="form-label">郵便番号</label>
-            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional(optional($user->profile)->address)->zipcode) }}">
+            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional($user->address)->zipcode) }}">
             @error('zipcode')
                 {{$message}}
             @enderror
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">住所</label>
-            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional(optional($user->profile)->address)->address) }}">
+            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional($user->address)->address) }}">
             @error('address')
                 {{$message}}
             @enderror
         </div>
         <div class="mb-3">
             <label for="building" class="form-label">建物名</label>
-            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional(optional($user->profile)->address)->building) }}">
+            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional($user->address)->building) }}">
             @error('building')
                 {{$message}}
             @enderror
         </div>
 
-        <!-- 更新ボタン -->
         <div class="text-center">
             <button type="submit" class="btn btn-danger w-100 py-2">更新する</button>
         </div>

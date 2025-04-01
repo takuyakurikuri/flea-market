@@ -2,16 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PurchaseRequest;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
+use App\Models\Purchase;
 
 class StripeController extends Controller
 {
 
 
-    public function checkout(Request $request, $item_id)
+    public function checkout(PurchaseRequest $request, $item_id)
     {
+
+        $user = Auth::user();
+        $zip1 = substr($request->zipcode,0,3);
+        $zip2 = substr($request->zipcode,4);
+        $zipcode = $zip1 . $zip2;
+        
+        if($request->modify == 'true'){
+            $address = address::create([
+                'zipcode' => $zipcode,
+                'address' => $request->address,
+                'building' => $request->building
+            ]);
+            
+            purchase::create([
+                'user_id' => $user->id,
+                'address_id' => $address->id,
+                'item_id' => $request->item_id,
+                'payment_method' => $request->payment_method,
+            ]);
+
+            return redirect('$session->url')->with('message','発送先を変更し、商品を購入しました');
+        }
+
+        purchase::create([
+            'user_id' => $user->id,
+            'payment_method' => $request->payment_method,
+            'item_id' => $request->item_id,
+            'address_id' => $user->address_id
+        ]);
+        
         // 商品情報を取得
         $item = \App\Models\Item::findOrFail($item_id);
 
@@ -25,9 +59,9 @@ class StripeController extends Controller
                 'price_data' => [
                     'currency' => 'jpy',
                     'product_data' => [
-                        'name' => $item->item_name,
+                        'name' => $item->name,
                     ],
-                    'unit_amount' => $item->item_price
+                    'unit_amount' => $item->price
                 ],
                 'quantity' => 1,
             ]],

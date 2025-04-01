@@ -36,22 +36,22 @@ class ItemController extends Controller
     }
 
     public function sell(ExhibitionRequest $request) {
-        $item_image_path = null;
-        if ($request->hasFile('item_image_path')) {
+        $image_path = null;
+        if ($request->hasFile('image_path')) {
             // 画像を 'storage/app/public/images' に保存し、保存されたパスを取得
-            $item_image_path = $request->file('item_image_path')->store('images', 'public');
+            $image_path = $request->file('image_path')->store('images', 'public');
         }
         
         $user = Auth::user();
 
         $item = Item::create([
-        'exhibitor_id' => $user->id,
-        'item_image_path' => $item_image_path,
+        'user_id' => $user->id,
+        'image_path' => $image_path,
         'condition'=>$request['condition'],
-        'item_name' => $request['item_name'],
-        'item_brand' => $request['item_brand'],
-        'item_detail' => $request['item_detail'],
-        'item_price' => $request['item_price']
+        'name' => $request['name'],
+        'brand' => $request['brand'],
+        'detail' => $request['detail'],
+        'price' => $request['price']
         ]);
 
         $item->categories()->attach($request->category_id);
@@ -63,7 +63,7 @@ class ItemController extends Controller
     public function itemDetail($item_id) {
         $item = Item::withCount('favorites')->find($item_id);
         $comments_count = Item::withCount('comments')->find($item_id);
-        $comments = Comment::with(['user.profile'])->where('item_id',$item_id)->get();
+        $comments = Comment::with(['user'])->where('item_id',$item_id)->get();
         $isFavorite = Auth::check() ? favorite::where('item_id',$item_id)->where('user_id',Auth::id())->exists() : false;
         $item_categories = CategoryItem::where('item_id',$item_id)->get();
 
@@ -94,7 +94,7 @@ class ItemController extends Controller
         comment::create([
             'user_id' => Auth::id(),
             'item_id' => $request->item_id,
-            'content' =>$request->comment
+            'content' =>$request->content
         ]);
 
         return redirect()->route('item.detail', ['item_id' => $request->item_id])->with('message','コメントを送信しました');

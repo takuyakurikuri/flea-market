@@ -63,7 +63,7 @@ class ProfileController extends Controller
             $user_image_path = $request->file('user_image_path')->store('images', 'public');
         }
         else {
-            $user_image_path = $request->existing_user_image_path;
+            $user_image_path = $request->existing_image_path;
         }
 
         Profile::find($request->user_id)->update([

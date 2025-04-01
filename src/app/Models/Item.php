@@ -12,16 +12,14 @@ class Item extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'exhibitor_id',
-        'item_image_path',
-        //'item_category_id',
-        //'condition_id',
+        'user_id',
+        'image_path',
         'condition',
-        'item_name',
-        'item_brand',
-        'item_detail',
-        'item_price',
-        'purchase_id'
+        'name',
+        'brand',
+        'detail',
+        'price',
+        //'purchase_id'
     ];
 
     public function exhibitor(){
@@ -48,13 +46,13 @@ class Item extends Model
         return $this->belongsToMany(User::class, 'favorites', 'item_id', 'user_id');
     }
 
-    public function purchase(){
-        return $this->belongsTo(Purchase::class);
+    public function purchases(){
+        return $this->hasMany(Purchase::class);
     }
 
     public function scopeKeywordSearch($query,$keyword){
         if(!empty($keyword)){
-            $query->where('item_name','like','%'.$keyword.'%');
+            $query->where('name','like','%'.$keyword.'%');
         }
     }
 }

@@ -12,9 +12,8 @@ class Purchase extends Model
     protected $fillable = [
         'user_id',
         'payment_method',
-        'purchase_zipcode',
-        'purchase_address',
-        'purchase_building'
+        'address_id',
+        'item_id'
     ];
 
     public function item(){

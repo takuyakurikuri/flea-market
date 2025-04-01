@@ -17,8 +17,8 @@
             @csrf
             <div class="mb-3">
                 <label class="form-label">商品画像</label>
-                <input type="file" name="item_image_path" accept="image/*" class="form-control">
-                @error('item_image_path')
+                <input type="file" name="image_path" accept="image/*" class="form-control">
+                @error('image_path')
                     {{$message}}
                 @enderror
             </div>
@@ -53,19 +53,19 @@
             <h3 class="mt-4">商品名と説明</h3>
             <div class="mb-3">
                 <label class="form-label">商品名</label>
-                <input type="text" name="item_name" class="form-control">
-                @error('item_name')
+                <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                @error('name')
                     {{$message}}
                 @enderror
             </div>
             <div class="mb-3">
                 <label class="form-label">ブランド名</label>
-                <input type="text" name="item_brand" class="form-control">
+                <input type="text" name="brand" class="form-control" value="{{old('brand')}}">
             </div>
             <div class="mb-3">
                 <label class="form-label">商品の説明</label>
-                <textarea name="item_detail" class="form-control" rows="4"></textarea>
-                @error('item_detail')
+                <textarea name="detail" class="form-control" rows="4" value="{{old('detail')}}"></textarea>
+                @error('detail')
                     {{$message}}
                 @enderror
             </div>
@@ -73,9 +73,9 @@
                 <label class="form-label">販売価格</label>
                 <div class="input-group">
                     <span class="input-group-text">￥</span>
-                    <input type="number" name="item_price" class="form-control">
+                    <input type="number" name="price" class="form-control" value="{{old('price')}}">
                 </div>
-                @error('item_price')
+                @error('price')
                     {{$message}}
                 @enderror
             </div>

@@ -15,8 +15,8 @@ class PurchaseController extends Controller
     public function purchase($item_id){
         $item =  item::find($item_id);
         $user = Auth::user();
-        $zip1 = substr($user->profile->address->zipcode,0,3);
-        $zip2 = substr($user->profile->address->zipcode,3);
+        $zip1 = substr($user->address->zipcode,0,3);
+        $zip2 = substr($user->address->zipcode,3);
         $zipcode = $zip1 . "-" . $zip2;
         $changeAddress = false;
         return view('purchase',compact('item','user','zipcode','changeAddress'));
@@ -39,22 +39,36 @@ class PurchaseController extends Controller
         return redirect()->route('item.purchase',['item_id'=>$item_id])->with('message','住所を変更しました')->with('changeAddress',$changeAddress);
     }
 
-    public function buy(PurchaseRequest $request){
+    public function buy(PurchaseRequest $request, $item_id){
         $user = Auth::user();
         $zip1 = substr($request->zipcode,0,3);
         $zip2 = substr($request->zipcode,4);
         $zipcode = $zip1 . $zip2;
-        $purchase = purchase::create([
+        
+        if($request->modify == true){
+            $address = address::create([
+                'zipcode' => $zipcode,
+                'address' => $request->address,
+                'building' => $request->building
+            ]);
+            
+            purchase::create([
+                'user_id' => $user->id,
+                'address_id' => $address->id,
+                'item_id' => $request->item_id,
+                'payment_method' => $request->payment_method,
+            ]);
+
+            return redirect('/')->with('message','発送先を変更し、商品を購入しました');
+        }
+
+        purchase::create([
             'user_id' => $user->id,
             'payment_method' => $request->payment_method,
-            'purchase_zipcode' => $zipcode,
-            'purchase_address' => $request->address,
-            'purchase_building' => $request->building
+            'item_id' => $request->item_id,
+            'address_id' => $user->address_id
         ]);
 
-        item::find($request->purchase_item_id)->update([
-            'purchase_id'=> $purchase->id
-        ]);
         return redirect('/')->with('message','商品を購入しました');
     }
 }

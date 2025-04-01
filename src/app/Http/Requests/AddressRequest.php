@@ -23,13 +23,20 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
             'name' => ['required'],
             'zipcode' => ['required','digits:7'],
             'address' => ['required'],
             //'building' => ['string'],
-            'user_image_path' => ['mimes:jpg,png']
+            'image_path' => ['mimes:jpg,png']
         ];
+
+
+        if ($this->routeIs('address.change')) {
+            return array_intersect_key($rules, array_flip(['zipcode', 'address']));
+        }
+
+        return $rules;
     }
 
     public function messages()
@@ -40,7 +47,8 @@ class AddressRequest extends FormRequest
             'zipcode.digits' => '郵便番号は7桁で入力して下さい',
             'address.required' => ' 住所を入力して下さい',
             //'building.string' => '文字で入力して下さい',
-            'user_image_path.mimes' => '画像はjpgかpngにて設定ください'
+            'image_path.mimes' => '画像はjpgかpngにて設定ください'
         ];
+
     }
 }

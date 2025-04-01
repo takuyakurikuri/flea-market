@@ -28,6 +28,7 @@ use App\Models\Address;
 use App\Models\Purchase;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Support\Carbon;
+use App\Http\Requests\AddressRequest;
 
 class AuthController extends Controller
 {
@@ -127,11 +128,11 @@ class AuthController extends Controller
         return view('profile' ,compact('user'));
     }
     
-    public function profileRegister(Request $request) {
-        $user_image_path = null;
-        if ($request->hasFile('user_image_path')) {
+    public function profileRegister(AddressRequest $request) {
+        $image_path = null;
+        if ($request->hasFile('image_path')) {
             // 画像を 'storage/app/public/images' に保存し、保存されたパスを取得
-            $user_image_path = $request->file('user_image_path')->store('images', 'public');
+            $image_path = $request->file('image_path')->store('images', 'public');
         }
 
         $address = address::create([
@@ -140,39 +141,47 @@ class AuthController extends Controller
             'building' => $request['building'],
         ]);
         
-        Profile::create([
-            'user_id' => $request['user_id'],
-            'user_image_path' => $user_image_path,
-            'address_id' => $address->id
-            //'zipcode' => $request['zipcode'],
-            //'address' => $request['address'],
-            //'building' => $request['building'],
+        user::find($request->user_id)->update([
+            'image_path' => $image_path,
+            'address_id' => $address->id,
+            'name' => $request['name']
         ]);
+        
+        // Profile::create([
+        //     'user_id' => $request['user_id'],
+        //     'user_image_path' => $user_image_path,
+        //     'address_id' => $address->id
+        //     //'zipcode' => $request['zipcode'],
+        //     //'address' => $request['address'],
+        //     //'building' => $request['building'],
+        // ]);
 
         return redirect('/mypage')->with('success','プロフィール登録が完了しました');
     }
 
-    public function modifyProfile(Request $request){
+    public function modifyProfile(AddressRequest $request){
 
-        $user_image_path = null;
-        if ($request->hasFile('user_image_path')) {
+        $image_path = null;
+        if ($request->hasFile('image_path')) {
             // 画像を 'storage/app/public/images' に保存し、保存されたパスを取得
-            $user_image_path = $request->file('user_image_path')->store('images', 'public');
+            $image_path = $request->file('image_path')->store('images', 'public');
         }
         else {
-            $user_image_path = $request->existing_user_image_path;
+            $image_path = $request->existing_image_path;
         }
 
-        Profile::find($request->user_id)->update([
-            'user_image_path' => $user_image_path,
-            //'zipcode' => $request['zipcode'],
-            //'address' => $request['address'],
-            //'building' => $request['building'],
-        ]);
+        // Profile::find($request->user_id)->update([
+        //     'user_image_path' => $user_image_path,
+        //     //'zipcode' => $request['zipcode'],
+        //     //'address' => $request['address'],
+        //     //'building' => $request['building'],
+        // ]);
 
-        $profile = Profile::find($request->user_id);
+        //$profile = Profile::find($request->user_id);
 
-        address::find($profile->address_id)->update([
+        $user = user::find($request->user_id);
+
+        address::find($user->address_id)->update([
             'zipcode' => $request['zipcode'],
             'address' => $request['address'],
             'building' => $request['building'],
@@ -180,8 +189,9 @@ class AuthController extends Controller
 
         User::find($request->user_id)->update([
             'name' => $request['name'],
+            'image_path' => $image_path,
         ]);
-        
+    
         return redirect('/mypage')->with('message','プロフィールの修正を行いました');
     }
 
@@ -205,6 +215,20 @@ class AuthController extends Controller
         $request->user()->sendEmailVerificationNotification();
 
         return back()->with('message', 'Verification link sent!');
+    }
+
+    public function mypage(Request $request){
+        if($request->tab == 'buy' && Auth::check()){
+            $user = Auth::user();
+            // $items = auth()->user()->purchaseItems()->get();
+            $user = auth()->user();
+            $items = $user->purchasedItems;
+        }
+        else{
+            $user = Auth::user();
+            $items = Item::where('user_id',$user->id)->get();
+        }
+        return view('mypage' ,compact('items','user'));
     }
 
 }

@@ -28,15 +28,15 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <div class="border p-3">
-                    <img src="{{ asset('storage/' . $item->item_image_path) }}" class="img-fluid w-100"
-                        alt="{{ $item->item_name }}">
+                    <img src="{{ asset('storage/' . $item->image_path) }}" class="img-fluid w-100"
+                        alt="{{ $item->name }}">
                 </div>
             </div>
 
             <div class="col-md-6">
-                <h2>{{ $item->item_name }}</h2>
-                <p class="text-muted">{{ $item->item_brand }}</p>
-                <h4 class="text-danger">￥{{ number_format($item->item_price) }}（税込）</h4>
+                <h2>{{ $item->name }}</h2>
+                <p class="text-muted">{{ $item->brand }}</p>
+                <h4 class="text-danger">￥{{ number_format($item->price) }}（税込）</h4>
 
                 <div class="d-flex align-items-center mb-3">
                     @if (Auth::check())
@@ -73,7 +73,7 @@
                         {{$comments_count->comments_count}}
                     </span>
                 </div>
-                @if (isset($item->purchase_id))
+                @if ($item->purchases->isNotEmpty())
                     <p class="btn btn-light w-100">売り切れました</p>
                 @else
                     <a href="/item/{{$item->id}}/purchase" class="btn btn-danger w-100">購入手続きへ</a>
@@ -82,7 +82,7 @@
 
                 <div class="mt-4">
                     <h3>商品説明</h3>
-                    <p>{{ $item->item_detail }}</p>
+                    <p>{{ $item->detail }}</p>
                 </div>
 
                 <div class="mt-3">
@@ -122,7 +122,7 @@
                     
                     @foreach ($comments as $comment)
                         <div class="d-flex align-items-start p-3">
-                            <img src="{{ asset('storage/' . $comment->user->profile->user_image_path) }}" class="rounded-circle me-3" width="40"
+                            <img src="{{ asset('storage/' . $comment->user->image_path) }}" class="rounded-circle me-3" width="40"
                                 height="40" alt="admin">
                             <div>
                                 <h5 class="mb-1">{{$comment->user->name}}</h5>
@@ -137,7 +137,7 @@
                     <form action="/item/{item_id}/comment" method="post">
                         @csrf
                         <input type="hidden" name="item_id" value="{{ $item->id }}">
-                        <input  type="text" name="comment" class="form-control" rows="3">
+                        <input  type="text" name="content" class="form-control" rows="3">
                         @error('content')
                             {{$message}}
                         @enderror

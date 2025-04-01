@@ -40,6 +40,7 @@
                     <label for="password_confirmation" class="form-label">確認用パスワード</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                 </div>
+                <input type="hidden" name="address_id" value="1">
                 @error('password')
                     {{$message}}
                 @enderror

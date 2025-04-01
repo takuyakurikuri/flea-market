@@ -19,9 +19,11 @@ class CreatePurchasesTable extends Migration
             //$table->integer('payment_method_id');
             $table->integer('payment_method');
             //$table->integer('address_id');
-            $table->string('purchase_zipcode');
-            $table->string('purchase_address');
-            $table->string('purchase_building')->nullable();
+            // $table->string('purchase_zipcode');
+            // $table->string('purchase_address');
+            // $table->string('purchase_building')->nullable();
+            $table->foreignId('item_id')->constrained()->cascadeOnDelete();//改修作業
+            $table->foreignId('address_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

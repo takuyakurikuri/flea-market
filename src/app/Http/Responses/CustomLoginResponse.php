@@ -12,7 +12,7 @@ class CustomLoginResponse implements LoginResponseContract
         $user = auth()->user();
 
         
-        if (!$user->profile) {
+        if (!$user->address) {
             return redirect('/mypage/profile'); // 適切なルートを指定
         }
 
