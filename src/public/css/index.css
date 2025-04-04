@@ -22,3 +22,7 @@
     object-fit: contain;
     transform: translate(-50%, -50%) rotate(10deg) scale(0.8);
 }
+
+.soldout-label {
+    display: none;
+}

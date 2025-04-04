@@ -19,12 +19,19 @@ class ItemController extends Controller
 {
     public function index(Request $request) {
         $tab = $request->query('tab');
-        if($tab == 'mylist' && Auth::check()){
-            $user = Auth::user();
-            $items = $user->favorites()->get();//エラーになるが、laravelの仕様が古いためと思われる
+        if($tab == 'mylist'){
+            $items = collect();
+            if(Auth::check()){
+                $user = Auth::user();
+                $items = $user->favorites()->get();
+            }
         }
         else {
-            $items = Item::all();
+            $items = item::all();
+            if(Auth::user()){
+                $items = Item::where('user_id','!=',auth()->id())->get();
+            }
+
         }
         return view('index',compact('items'));
     }

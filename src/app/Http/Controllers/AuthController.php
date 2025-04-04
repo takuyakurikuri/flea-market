@@ -86,11 +86,11 @@ class AuthController extends Controller
             $user = auth()->user();
 
             // メール未認証ならログアウトして `/email/verify` にリダイレクト
-            //if (!$user->hasVerifiedEmail()) {
-            //    auth()->logout();
-            //    return redirect()->route('verification.notice')
-            //        ->with('error', 'メール認証を完了してください。');
-            //}
+            if (!$user->hasVerifiedEmail()) {
+                auth()->logout();
+                return redirect()->route('verification.notice')
+                    ->with('error', 'メール認証を完了してください。');
+            }
 
             return app(LoginResponse::class);
         });
@@ -111,7 +111,6 @@ class AuthController extends Controller
             ));
         }
 
-
         return (new Pipeline(app()))->send($request)->through(array_filter([
             config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
             config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
@@ -119,7 +118,7 @@ class AuthController extends Controller
             //AttemptToAuthenticate::class,
             CustomAttemptToAuthenticate::class,
             PrepareAuthenticatedSession::class,
-            EnsureEmailIsVerified::class, //メール認証の追加
+            //EnsureEmailIsVerified::class, //メール認証の追加
         ]));
     }
 
@@ -146,15 +145,6 @@ class AuthController extends Controller
             'address_id' => $address->id,
             'name' => $request['name']
         ]);
-        
-        // Profile::create([
-        //     'user_id' => $request['user_id'],
-        //     'user_image_path' => $user_image_path,
-        //     'address_id' => $address->id
-        //     //'zipcode' => $request['zipcode'],
-        //     //'address' => $request['address'],
-        //     //'building' => $request['building'],
-        // ]);
 
         return redirect('/mypage')->with('success','プロフィール登録が完了しました');
     }
@@ -170,18 +160,15 @@ class AuthController extends Controller
             $image_path = $request->existing_image_path;
         }
 
-        // Profile::find($request->user_id)->update([
-        //     'user_image_path' => $user_image_path,
-        //     //'zipcode' => $request['zipcode'],
-        //     //'address' => $request['address'],
-        //     //'building' => $request['building'],
+        //$user = user::find($request->user_id);
+
+        // address::find($user->address_id)->update([
+        //     'zipcode' => $request['zipcode'],
+        //     'address' => $request['address'],
+        //     'building' => $request['building'],
         // ]);
 
-        //$profile = Profile::find($request->user_id);
-
-        $user = user::find($request->user_id);
-
-        address::find($user->address_id)->update([
+        $address = address::create([
             'zipcode' => $request['zipcode'],
             'address' => $request['address'],
             'building' => $request['building'],
@@ -190,24 +177,13 @@ class AuthController extends Controller
         User::find($request->user_id)->update([
             'name' => $request['name'],
             'image_path' => $image_path,
+            'address_id' => $address->id,
         ]);
     
         return redirect('/mypage')->with('message','プロフィールの修正を行いました');
     }
 
-    //public function mypage(Request $request){
-    //    if($request->tab == 'buy' && Auth::check()){
-    //        $user = Auth::user();
-    //        $items = auth()->user()->purchaseItem()->get();
-    //    }
-    //    else{
-    //        $user = Auth::user();
-    //        $items = Item::where('exhibitor_id',$user->id)->get();
-    //    }
-    //    return view('mypage' ,compact('items','user'));
-    //}
-
-    public function mailVerify(){
+    public function mailVerify(Request $request){
         return view('auth.mail_verification');
     }
 
@@ -220,7 +196,6 @@ class AuthController extends Controller
     public function mypage(Request $request){
         if($request->tab == 'buy' && Auth::check()){
             $user = Auth::user();
-            // $items = auth()->user()->purchaseItems()->get();
             $user = auth()->user();
             $items = $user->purchasedItems;
         }

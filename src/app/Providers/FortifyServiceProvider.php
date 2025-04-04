@@ -40,19 +40,6 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        //Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
-
-        //RateLimiter::for('two-factor', function (Request $request) {
-        //    return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        //});
-
-        //以下いらないかも
-        //Fortify::authenticateThrough(function ($request) {
-        //    return array_filter([
-        //        EnsureEmailIsVerified::class, //メール認証の追加
-        //        CustomAttemptToAuthenticate::class, // カスタム認証クラス
-        //    ]);
-        //});
 
 
         Fortify::registerView(function(){

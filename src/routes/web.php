@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\ProfileController;
+//use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StripeController;
 
@@ -27,13 +27,13 @@ Route::middleware('auth','verified')->group(function(){
     Route::post('/item/{item_id}/checkout',[StripeController::class,'checkout']);
     Route::get('/success', [StripeController::class, 'success'])->name('checkout.success');
     Route::get('/cancel', [StripeController::class, 'cancel'])->name('checkout.cancel');
+    Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
+    Route::patch('/mypage/profile',[AuthController::class,'modifyProfile']);
 });
 
 Route::get('/',[ItemController::class, 'index']);
 Route::get('/search',[ItemController::class, 'search']);
 route::post('/sell',[ItemController::class,'sell']);
-Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
-Route::patch('/mypage/profile',[AuthController::class,'modifyProfile']);
 
 Route::prefix('/item/{item_id}')->group(function(){
     Route::get('',[ItemController::class,'itemDetail'])->name('item.detail');

@@ -29,6 +29,7 @@ class LoginRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
+                'exists:users,email',
             ],
             'password' => ['required', 'min:8'],
         ];
@@ -36,6 +37,7 @@ class LoginRequest extends FormRequest
     public function messages(){
         return [
             'email.required' =>'メールアドレスを入力して下さい',
+            'email.exists' => 'ログイン情報が登録されていません',
             'password.required' =>'パスワードを入力して下さい',
             'password.min8' =>'パスワードは8桁以上で入力してください'
         ];

@@ -15,9 +15,8 @@ class CreateCategoryItemTable extends Migration
     {
         Schema::create('category_item', function (Blueprint $table) {
             $table->id();
-            //$table->string('content');//中間テーブル化したら消すカラム
-            $table->foreignId('item_id')->constrained()->cascadeOnDelete();//中間テーブル化時に追加するカラム
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();//中間テーブル化時に追加するカラム
+            $table->foreignId('item_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

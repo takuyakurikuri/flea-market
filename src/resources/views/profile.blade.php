@@ -68,18 +68,6 @@
                 {{$message}}
             @enderror
         </div>
-        {{--<div class="mb-3">
-            <label for="zipcode" class="form-label">郵便番号</label>
-            <input type="text" name="zipcode" class="form-control" id="zipcode" value="{{ old('zipcode' , optional($user->profile)->zipcode) }}">
-        </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">住所</label>
-            <input type="text" name="address" class="form-control" id="address" value="{{ old('address' , optional($user->profile)->address) }}">
-        </div>
-        <div class="mb-3">
-            <label for="building" class="form-label">建物名</label>
-            <input type="text" name="building" class="form-control" id="building" value="{{ old('building' , optional($user->profile)->building) }}">
-        </div>--}}
 
         <div class="mb-3">
             <label for="zipcode" class="form-label">郵便番号</label>

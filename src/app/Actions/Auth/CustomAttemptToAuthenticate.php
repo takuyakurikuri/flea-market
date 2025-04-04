@@ -22,9 +22,9 @@ class CustomAttemptToAuthenticate extends AttemptToAuthenticate
         }
 
         // 認証に失敗した場合、バリデーションエラーを返す
-            throw ValidationException::withMessages([
-                Fortify::username() => ['ログイン情報が登録されていません'],
-            ]);
+        throw ValidationException::withMessages([
+            Fortify::username() => ['ログイン情報が登録されていません'],
+        ]);
 
         $this->throwFailedAuthenticationException($request);
     }

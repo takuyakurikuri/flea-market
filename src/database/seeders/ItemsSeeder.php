@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 class ItemsSeeder extends Seeder
 {
@@ -36,10 +37,11 @@ class ItemsSeeder extends Seeder
                 Storage::put("$storagePath/$filename", $imageData);
             }
         }
-        
+        $users = User::all();
+
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
-            'user_id' => '2',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'1',
             //'condition_id' => '1',
             'condition' => '1',
@@ -54,7 +56,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
-            'user_id' => '5',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'2',
             //'condition_id' => '2',
             'condition' => '2',
@@ -69,7 +71,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
-            'user_id' => '1',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'3',
             //'condition_id' => '3',
             'condition' => '3',
@@ -84,7 +86,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
-            'user_id' => '8',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'4',
             //'condition_id' => '4',
             'condition' => '4',
@@ -99,7 +101,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
-            'user_id' => '7',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'5',
             //'condition_id' => '1',
             'condition' => '1',
@@ -114,7 +116,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
-            'user_id' => '6',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'6',
             //'condition_id' => '2',
             'condition' => '2',
@@ -129,7 +131,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
-            'user_id' => '6',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'7',
             //'condition_id' => '3',
             'condition' => '3',
@@ -144,7 +146,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
-            'user_id' => '6',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'8',
             //'condition_id' => '4',
             'condition' => '4',
@@ -159,7 +161,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
-            'user_id' => '10',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'9',
             //'condition_id' => '1',
             'condition' => '1',
@@ -174,7 +176,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
-            'user_id' => '9',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'10',
             //'condition_id' => '2',
             'condition' => '2',
@@ -191,7 +193,7 @@ class ItemsSeeder extends Seeder
         
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
-            'user_id' => '8',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'1',
             //'condition_id' => '1',
             'condition' => '1',
@@ -206,7 +208,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
-            'user_id' => '2',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'2',
             //'condition_id' => '2',
             'condition' => '2',
@@ -221,7 +223,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
-            'user_id' => '1',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'3',
             //'condition_id' => '3',
             'condition' => '3',
@@ -236,7 +238,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
-            'user_id' => '3',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'4',
             //'condition_id' => '4',
             'condition' => '4',
@@ -251,7 +253,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
-            'user_id' => '4',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'5',
             //'condition_id' => '1',
             'condition' => '1',
@@ -266,7 +268,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
-            'user_id' => '1',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'6',
             //'condition_id' => '2',
             'condition' => '2',
@@ -281,7 +283,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
-            'user_id' => '8',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'7',
             //'condition_id' => '3',
             'condition' => '3',
@@ -296,7 +298,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
-            'user_id' => '5',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'8',
             //'condition_id' => '4',
             'condition' => '4',
@@ -311,7 +313,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
-            'user_id' => '4',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'9',
             //'condition_id' => '1',
             'condition' => '1',
@@ -326,7 +328,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
-            'user_id' => '7',
+            'user_id' => $users->random()->id,
             //'item_category_id' =>'10',
             //'condition_id' => '2',
             'condition' => '2',

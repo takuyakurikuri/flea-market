@@ -51,6 +51,9 @@
                         <div class="card">
                             <img class="card-img-top p-2" src="{{ asset('storage/' . $item->image_path) }}"
                                 alt="{{ $item->name }}">
+                            @if ($item->purchases->isNotEmpty())
+                                <img class="soldout-overlay" src="{{ asset('images/soldout.png') }}" alt="soldout">
+                            @endif
                             <div class="card-body text-center">
                                 <p class="card-text">{{ $item->name }}</p>
                             </div>

@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreignId('address_id')->nullable()->constrained()->cascadeOnDelete();//改修作業
-            $table->string('image_path')->nullable();//改修作業
+            $table->foreignId('address_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('image_path')->nullable();
             
         });
     }
