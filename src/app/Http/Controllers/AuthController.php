@@ -20,7 +20,6 @@ use Laravel\Fortify\Actions\CanonicalizeUsername;
 use Laravel\Fortify\Actions\AttemptToAuthenticate;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Profile;
 use App\Models\Item;
 use App\Actions\Auth\CustomAttemptToAuthenticate;
 use App\Models\User;
@@ -42,20 +41,10 @@ class AuthController extends Controller
 
     public function store(RegisterRequest $request, CreatesNewUsers $creator): RegisterResponse
     {
-        //event(new Registered($user = $creator->create($request->all())));
-
-        //$this->guard->login($user);
-
-        //2要素認証実装時はルートサービスプロバイダ側で処理を変える
-        //return app(RegisterResponse::class);
 
         $user = $creator->create($request->all());
 
         $user->sendEmailVerificationNotification();
-
-        //return redirect('/register/verify')->with([
-        //    'message' => '確認用メールが送信されました。',
-        //]);
 
         return app(RegisterResponse::class);
     }
@@ -63,20 +52,16 @@ class AuthController extends Controller
     public function verifyEmail($id){
         $user = User::find($id);
 
-        // すでに認証済みならリダイレクト
         if ($user->hasVerifiedEmail()) {
             return redirect('/mypage/profile')->with('message', 'すでに認証済みです。');
         }
 
-        // メール認証を完了
         $user->forceFill([
             'email_verified_at' => Carbon::now(),
         ])->save();
 
-        // ユーザーをログイン状態にする
         Auth::login($user);
 
-        // 認証後のリダイレクト
         return redirect('/mypage/profile')->with('message', 'メール認証が完了しました。');
     }
 
@@ -85,7 +70,6 @@ class AuthController extends Controller
         return $this->loginPipeline($request)->then(function ($request) {
             $user = auth()->user();
 
-            // メール未認証ならログアウトして `/email/verify` にリダイレクト
             if (!$user->hasVerifiedEmail()) {
                 auth()->logout();
                 return redirect()->route('verification.notice')
@@ -99,13 +83,13 @@ class AuthController extends Controller
     //ログインに関するpipelineの処理を丸ごと拡張
     protected function loginPipeline(LoginRequest $request)
     {
-        if (Fortify::$authenticateThroughCallback) { //authenticateThroughを定義したら
+        if (Fortify::$authenticateThroughCallback) {
             return (new Pipeline(app()))->send($request)->through(array_filter(
                 call_user_func(Fortify::$authenticateThroughCallback, $request)
             ));
         }
 
-        if (is_array(config('fortify.pipelines.login'))) {//configでパイプラインを定義したら
+        if (is_array(config('fortify.pipelines.login'))) {
             return (new Pipeline(app()))->send($request)->through(array_filter(
                 config('fortify.pipelines.login')
             ));
@@ -118,7 +102,6 @@ class AuthController extends Controller
             //AttemptToAuthenticate::class,
             CustomAttemptToAuthenticate::class,
             PrepareAuthenticatedSession::class,
-            //EnsureEmailIsVerified::class, //メール認証の追加
         ]));
     }
 
@@ -159,14 +142,6 @@ class AuthController extends Controller
         else {
             $image_path = $request->existing_image_path;
         }
-
-        //$user = user::find($request->user_id);
-
-        // address::find($user->address_id)->update([
-        //     'zipcode' => $request['zipcode'],
-        //     'address' => $request['address'],
-        //     'building' => $request['building'],
-        // ]);
 
         $address = address::create([
             'zipcode' => $request['zipcode'],

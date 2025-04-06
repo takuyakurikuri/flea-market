@@ -21,11 +21,11 @@ class ChangeMethodTest extends DuskTestCase
      */
     public function testExample()
     {
-        Address::factory()->create();
-        $user = User::factory()->create();
-        $item = Item::factory()->create();
-        category::factory()->count(20)->create();
-        CategoryItem::factory()->count(2)->create(['item_id' =>$item->id]);
+        // Address::factory()->create();
+        // $user = User::factory()->create();
+        // $item = Item::factory()->create();
+        // category::factory()->count(20)->create();
+        // CategoryItem::factory()->count(2)->create(['item_id' =>$item->id]);
 
         $this->browse(function (Browser $browser) use ($user,$item) {
             $browser->loginAs($user)

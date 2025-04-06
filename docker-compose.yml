@@ -49,3 +49,10 @@ services:
       - mysql
     ports:
       - 8080:80
+  dusk:
+    image: 'selenium/standalone-chrome'
+    volumes:
+      - ./tests:/tests
+    ports:
+      - 9515:4444 # seleniumのWebDriverはport 4444で待機する
+    shm_size: '2gb'

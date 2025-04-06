@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\User;
-use App\Models\ItemCategory;
-use App\Models\Condition;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Favorite;
 use App\Models\Comment;
@@ -38,8 +35,7 @@ class ItemController extends Controller
 
     public function sellRegister(){
         $categories = Category::all();
-        //$conditions = Condition::all();
-        return view('sell',compact('categories'/*,'conditions'*/));
+        return view('sell',compact('categories'));
     }
 
     public function sell(ExhibitionRequest $request) {
