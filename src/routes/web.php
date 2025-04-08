@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
-//use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StripeController;
 
 Route::post('/register',[AuthController::class,'store']);
@@ -21,7 +19,6 @@ Route::middleware('auth','verified')->group(function(){
     Route::get('/mypage/profile',[AuthController::class,'profile']);
     Route::post('/item/{item_id}/comment',[ItemController::class,'addComment']);
     Route::get('/item/{item_id}/purchase',[PurchaseController::class,'purchase'])->name('item.purchase');
-    //Route::post('/item/{item_id}/purchase',[PurchaseController::class,'buy']);
     Route::get('/purchase/address/{item_id}',[PurchaseController::class,'formAddress']);
     Route::post('/purchase/address/{item_id}',[PurchaseController::class,'changeAddress'])->name('address.change');
     Route::post('/item/{item_id}/checkout',[StripeController::class,'checkout']);

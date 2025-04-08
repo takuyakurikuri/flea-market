@@ -24,7 +24,6 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'email_verified_at' => null,
-            //'address_id' => $input['address_id'],//一時的な仮置きデータ
         ]);
     }
 }

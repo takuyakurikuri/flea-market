@@ -67,11 +67,6 @@
                     <input name="payment_method" type="hidden" id="hidden-payment-method" value="">
                     <button type="submit" class="btn btn-purchase mt-3">購入する</button>
                 </form>
-                {{-- <form action="/item/{{$item->id}}/checkout" method="post">
-                    @csrf
-                    <input type="hidden" name="purchase_item_id" value="{{$item->id}}">
-                    <button type="submit" class="btn btn-purchase mt-3">Stripeで購入</button>
-                </form> --}}
             </div>
         </div>
     </div>

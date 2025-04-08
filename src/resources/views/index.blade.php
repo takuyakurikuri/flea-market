@@ -51,19 +51,4 @@
         </div>
     </div>
 
-{{--@if (/*おすすめ*/)
-    @foreach ($items as $item)
-        <div>
-            <img src="{{$item['product_image']}}" alt="">
-            <p>{{$item['item_name']}}</p>
-        </div>
-    @endforeach
-@else /*マイリスト*/
-        @foreach ($items as $item)
-            <div>
-                <img src="{{$item['product_image']}}" alt="">
-                <p>{{$item['item_name']}}</p>
-            </div>
-    @endforeach
-@endif--}}
 @endsection

@@ -13,7 +13,7 @@ class CustomLoginResponse implements LoginResponseContract
 
         
         if (!$user->address) {
-            return redirect('/mypage/profile'); // 適切なルートを指定
+            return redirect('/mypage/profile');
         }
 
         return redirect()->intended(config('fortify.home'));

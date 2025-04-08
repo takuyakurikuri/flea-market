@@ -42,8 +42,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'1',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => '腕時計',
             'brand' => 'armani',
@@ -57,8 +55,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'2',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'HDD',
             'brand' => 'toshiba',
@@ -72,8 +68,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'3',
-            //'condition_id' => '3',
             'condition' => '3',
             'name' => '玉ねぎ3束',
             'brand' => 'nagano',
@@ -87,8 +81,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'4',
-            //'condition_id' => '4',
             'condition' => '4',
             'name' => '革靴',
             'brand' => 'edwin',
@@ -102,8 +94,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'5',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => 'ノートPC',
             'brand' => 'apple',
@@ -117,8 +107,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'6',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'マイク',
             'brand' => 'hitachi',
@@ -132,8 +120,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'7',
-            //'condition_id' => '3',
             'condition' => '3',
             'name' => 'ショルダーバッグ',
             'brand' => 'furla',
@@ -147,8 +133,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'8',
-            //'condition_id' => '4',
             'condition' => '4',
             'name' => 'タンブラー',
             'brand' => 'zojirushi',
@@ -162,8 +146,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'9',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => 'コーヒーミル',
             'brand' => 'delonghi',
@@ -177,8 +159,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'10',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'メイクセット',
             'brand' => 'canmaketokyo',
@@ -189,13 +169,10 @@ class ItemsSeeder extends Seeder
 
         DB::table('items')->insert($param);
 
-        //2週目(お気に入り情報など格納する用)
         
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'1',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => '腕時計',
             'brand' => 'armani',
@@ -209,8 +186,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'2',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'HDD',
             'brand' => 'toshiba',
@@ -224,8 +199,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'3',
-            //'condition_id' => '3',
             'condition' => '3',
             'name' => '玉ねぎ3束',
             'brand' => 'nagano',
@@ -239,8 +212,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'4',
-            //'condition_id' => '4',
             'condition' => '4',
             'name' => '革靴',
             'brand' => 'edwin',
@@ -254,8 +225,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'5',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => 'ノートPC',
             'brand' => 'apple',
@@ -269,8 +238,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'6',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'マイク',
             'brand' => 'hitachi',
@@ -284,8 +251,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'7',
-            //'condition_id' => '3',
             'condition' => '3',
             'name' => 'ショルダーバッグ',
             'brand' => 'furla',
@@ -299,8 +264,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'8',
-            //'condition_id' => '4',
             'condition' => '4',
             'name' => 'タンブラー',
             'brand' => 'zojirushi',
@@ -314,8 +277,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'9',
-            //'condition_id' => '1',
             'condition' => '1',
             'name' => 'コーヒーミル',
             'brand' => 'delonghi',
@@ -329,8 +290,6 @@ class ItemsSeeder extends Seeder
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
             'user_id' => $users->random()->id,
-            //'item_category_id' =>'10',
-            //'condition_id' => '2',
             'condition' => '2',
             'name' => 'メイクセット',
             'brand' => 'canmaketokyo',

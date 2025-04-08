@@ -9,7 +9,7 @@
 @endsection
 
 @section('header-on')
-        
+
 @endsection
 
 @section('content')

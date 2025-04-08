@@ -19,16 +19,11 @@ class Item extends Model
         'brand',
         'detail',
         'price',
-        //'purchase_id'
     ];
 
     public function exhibitor(){
         return $this->belongsTo(User::class);
     }
-
-    //public function condition(){
-    //    return $this->belongsTo(Condition::class);
-    //}
 
     public function category_item(){
         return $this->hasMany(CategoryItem::class);

@@ -45,11 +45,9 @@ class StripeController extends Controller
             'item_id' => $request->item_id,
             'address_id' => $user->address_id
         ]);
-        
-        // 商品情報を取得
+
         $item = \App\Models\Item::findOrFail($item_id);
 
-        // Stripeの秘密鍵を設定
         Stripe::setApiKey(config('services.stripe.secret'));
 
         // Stripe Checkoutセッションを作成

@@ -34,7 +34,6 @@
         @endif
         <input type="hidden" name="user_id" value="{{$user->id}}">
 
-        <!-- プロフィール画像 -->
         <div class="text-center mb-3">
             <label for="profile_image_path" class="form-label">プロフィール画像</label>
             <div class="d-flex align-items-center justify-content-center">
@@ -60,7 +59,6 @@
             </div>
         </div>
 
-        <!-- フォーム入力欄 -->
         <div class="mb-3">
             <label for="name" class="form-label">ユーザー名</label>
             <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $user->name) }}">
