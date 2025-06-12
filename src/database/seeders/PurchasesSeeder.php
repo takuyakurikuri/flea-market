@@ -23,36 +23,36 @@ class PurchasesSeeder extends Seeder
         $addresses = Address::all();
         
         $param = [
-            'user_id' => $users->random()->id,
+            'user_id' => 1,
             'payment_method' => '1',
-            'item_id' => $items->random()->id,
+            'item_id' => 14,
             'address_id' => $addresses->random()->id,
         ];
 
         DB::table('purchases')->insert($param);
 
         $param = [
-            'user_id' => $users->random()->id,
+            'user_id' => 2,
             'payment_method' => '1',
-            'item_id' => $items->random()->id,
+            'item_id' => 16,
             'address_id' => $addresses->random()->id,
         ];
 
         DB::table('purchases')->insert($param);
 
         $param = [
-            'user_id' => $users->random()->id,
+            'user_id' => 3,
             'payment_method' => '2',
-            'item_id' => $items->random()->id,
+            'item_id' => 18,
             'address_id' => $addresses->random()->id,
         ];
 
         DB::table('purchases')->insert($param);
 
         $param = [
-            'user_id' => $users->random()->id,
+            'user_id' => 4,
             'payment_method' => '2',
-            'item_id' => $items->random()->id,
+            'item_id' => 20,
             'address_id' => $addresses->random()->id,
         ];
 

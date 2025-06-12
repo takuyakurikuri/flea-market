@@ -169,16 +169,50 @@ class AuthController extends Controller
     }
 
     public function mypage(Request $request){
-        if($request->tab == 'buy' && Auth::check()){
-            $user = Auth::user();
-            $user = auth()->user();
-            $items = $user->purchasedItems;
+        $user = Auth::user();
+
+        switch ($request->tab) {
+            case 'buy':
+                $items = $user->purchasedItems;
+                break;
+
+            case 'trading':
+                // 出品も購入も両方の立場で、未完了（進行中）の取引を取得
+                $items = Item::whereHas('purchases', function ($query) {
+                    $query->where('status', '!=', 'completed');
+                })
+                ->where(function ($query) use ($user) {
+                    $query->where('user_id', $user->id)
+                        ->orWhereHas('purchases', function ($q) use ($user) {
+                            $q->where('user_id', $user->id);
+                        });
+                })
+                ->with(['purchases' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id)->orWhereHas('item', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
+                }])
+                ->get();
+                break;
+
+            default:
+                $items = Item::where('user_id', $user->id)->get();
         }
-        else{
-            $user = Auth::user();
-            $items = Item::where('user_id',$user->id)->get();
-        }
-        return view('mypage' ,compact('items','user'));
+
+        return view('mypage', compact('items', 'user'));
     }
+
+    // public function mypage(Request $request){
+    //     if($request->tab == 'buy' && Auth::check()){
+    //         $user = Auth::user();
+    //         $user = auth()->user();
+    //         $items = $user->purchasedItems;
+    //     }
+    //     else{
+    //         $user = Auth::user();
+    //         $items = Item::where('user_id',$user->id)->get();
+    //     }
+    //     return view('mypage' ,compact('items','user'));
+    // }
 
 }

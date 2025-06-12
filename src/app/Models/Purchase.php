@@ -13,7 +13,8 @@ class Purchase extends Model
         'user_id',
         'payment_method',
         'address_id',
-        'item_id'
+        'item_id',
+        'status',
     ];
 
     public function item(){
@@ -22,6 +23,16 @@ class Purchase extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function chats()
+    {
+        return $this->hasMany(TransactionChat::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(TransactionReview::class);
     }
 
 }

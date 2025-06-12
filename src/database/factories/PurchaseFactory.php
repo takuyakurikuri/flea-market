@@ -21,6 +21,7 @@ class PurchaseFactory extends Factory
             'payment_method' => $this->faker->numberBetween(1,2),
             'item_id' => Item::factory(),
             'address_id' => Address::factory(),
+            'status' => 'beforeShipping',
         ];
     }
 }

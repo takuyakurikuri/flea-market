@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->foreignId('address_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->float('average_rating')->default(0);
             $table->string('image_path')->nullable();
             
         });

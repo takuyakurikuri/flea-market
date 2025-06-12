@@ -34,13 +34,17 @@
         </div>
 
         <div class="d-flex border-bottom pb-2">
-            <form action="/mypage" method="get" name="tab" value="sell" class="me-3">
+            <form action="/mypage" method="get" name="tab" value="sell" class="">
                 <input type="hidden" name="tab" value="sell">
-                <button class="btn btn-link text-decoration-none">出品した商品</button>
+                <button class="btn btn-link text-decoration-none {{ request('tab') === 'sell' ? 'text-danger' : '' }}">出品した商品</button>
             </form>
             <form action="/mypage" method="get">
                 <input type="hidden" name="tab" value="buy">
-                <button class="btn btn-link text-decoration-none text-danger">購入した商品</button>
+                <button class="btn btn-link text-decoration-none {{ request('tab') === 'buy' ? 'text-danger' : '' }}">購入した商品</button>
+            </form>
+            <form action="/mypage" method="get">
+                <input type="hidden" name="tab" value="trading">
+                <button class="btn btn-link text-decoration-none {{ request('tab') === 'trading' ? 'text-danger' : '' }}">取引中の商品</button>
             </form>
         </div>
 

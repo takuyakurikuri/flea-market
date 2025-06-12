@@ -19,6 +19,8 @@ class CreatePurchasesTable extends Migration
             $table->integer('payment_method');
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('address_id')->constrained()->cascadeOnDelete();
+            //取引ステータス追加
+            $table->enum('status', ['beforeShipping','shipped','completed'])->default('beforeShipping');
             $table->timestamps();
         });
     }

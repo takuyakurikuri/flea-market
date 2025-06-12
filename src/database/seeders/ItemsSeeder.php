@@ -39,9 +39,11 @@ class ItemsSeeder extends Seeder
         }
         $users = User::all();
 
+        
+        //以下はPro用課題データ
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 11,
             'condition' => '1',
             'name' => '腕時計',
             'brand' => 'armani',
@@ -54,7 +56,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 11,
             'condition' => '2',
             'name' => 'HDD',
             'brand' => 'toshiba',
@@ -67,7 +69,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 11,
             'condition' => '3',
             'name' => '玉ねぎ3束',
             'brand' => 'nagano',
@@ -80,7 +82,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 11,
             'condition' => '4',
             'name' => '革靴',
             'brand' => 'edwin',
@@ -93,7 +95,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 11,
             'condition' => '1',
             'name' => 'ノートPC',
             'brand' => 'apple',
@@ -106,7 +108,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 12,
             'condition' => '2',
             'name' => 'マイク',
             'brand' => 'hitachi',
@@ -119,7 +121,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 12,
             'condition' => '3',
             'name' => 'ショルダーバッグ',
             'brand' => 'furla',
@@ -132,7 +134,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 12,
             'condition' => '4',
             'name' => 'タンブラー',
             'brand' => 'zojirushi',
@@ -145,7 +147,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 12,
             'condition' => '1',
             'name' => 'コーヒーミル',
             'brand' => 'delonghi',
@@ -158,7 +160,140 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 12,
+            'condition' => '2',
+            'name' => 'メイクセット',
+            'brand' => 'canmaketokyo',
+            'detail' => '便利なメイクアップセット',
+            'price' => '2500',
+            
+        ];
+
+        DB::table('items')->insert($param);
+        //ここまでPro用課題データ
+
+
+        
+        $param = [
+            'image_path' => 'images/Armani+Mens+Clock.jpg',
+            'user_id' => 1,
+            'condition' => '1',
+            'name' => '腕時計',
+            'brand' => 'armani',
+            'detail' => 'スタイリッシュなデザインのメンズ腕時計',
+            'price' => '15000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/HDD+Hard+Disk.jpg',
+            'user_id' => 2,
+            'condition' => '2',
+            'name' => 'HDD',
+            'brand' => 'toshiba',
+            'detail' => '高速で信頼性の高いハードディスク',
+            'price' => '5000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/iLoveIMG+d.jpg',
+            'user_id' => 3,
+            'condition' => '3',
+            'name' => '玉ねぎ3束',
+            'brand' => 'nagano',
+            'detail' => '新鮮な玉ねぎ3束のセット',
+            'price' => '300',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
+            'user_id' => 4,
+            'condition' => '4',
+            'name' => '革靴',
+            'brand' => 'edwin',
+            'detail' => 'クラシックなデザインの革靴',
+            'price' => '4000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Living+Room+Laptop.jpg',
+            'user_id' => 5,
+            'condition' => '1',
+            'name' => 'ノートPC',
+            'brand' => 'apple',
+            'detail' => '高性能なノートパソコン',
+            'price' => '45000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Music+Mic+4632231.jpg',
+            'user_id' => 6,
+            'condition' => '2',
+            'name' => 'マイク',
+            'brand' => 'hitachi',
+            'detail' => '高音質のレコーディング用マイク',
+            'price' => '8000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Purse+fashion+pocket.jpg',
+            'user_id' => 7,
+            'condition' => '3',
+            'name' => 'ショルダーバッグ',
+            'brand' => 'furla',
+            'detail' => 'おしゃれなショルダーバッグ',
+            'price' => '3500',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Tumbler+souvenir.jpg',
+            'user_id' => 8,
+            'condition' => '4',
+            'name' => 'タンブラー',
+            'brand' => 'zojirushi',
+            'detail' => '使いやすいタンブラー',
+            'price' => '500',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
+            'user_id' => 9,
+            'condition' => '1',
+            'name' => 'コーヒーミル',
+            'brand' => 'delonghi',
+            'detail' => '手動のコーヒーミル',
+            'price' => '4000',
+            
+        ];
+
+        DB::table('items')->insert($param);
+
+        $param = [
+            'image_path' => 'images/外出メイクアップセット.jpg',
+            'user_id' => 10,
             'condition' => '2',
             'name' => 'メイクセット',
             'brand' => 'canmaketokyo',
@@ -172,7 +307,7 @@ class ItemsSeeder extends Seeder
         
         $param = [
             'image_path' => 'images/Armani+Mens+Clock.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 10,
             'condition' => '1',
             'name' => '腕時計',
             'brand' => 'armani',
@@ -185,7 +320,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/HDD+Hard+Disk.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 9,
             'condition' => '2',
             'name' => 'HDD',
             'brand' => 'toshiba',
@@ -198,7 +333,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/iLoveIMG+d.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 8,
             'condition' => '3',
             'name' => '玉ねぎ3束',
             'brand' => 'nagano',
@@ -211,7 +346,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Leather+Shoes+Product+Photo.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 7,
             'condition' => '4',
             'name' => '革靴',
             'brand' => 'edwin',
@@ -224,7 +359,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Living+Room+Laptop.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 6,
             'condition' => '1',
             'name' => 'ノートPC',
             'brand' => 'apple',
@@ -237,7 +372,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Music+Mic+4632231.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 5,
             'condition' => '2',
             'name' => 'マイク',
             'brand' => 'hitachi',
@@ -250,7 +385,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Purse+fashion+pocket.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 4,
             'condition' => '3',
             'name' => 'ショルダーバッグ',
             'brand' => 'furla',
@@ -263,7 +398,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Tumbler+souvenir.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 3,
             'condition' => '4',
             'name' => 'タンブラー',
             'brand' => 'zojirushi',
@@ -276,7 +411,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/Waitress+with+Coffee+Grinder.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 2,
             'condition' => '1',
             'name' => 'コーヒーミル',
             'brand' => 'delonghi',
@@ -289,7 +424,7 @@ class ItemsSeeder extends Seeder
 
         $param = [
             'image_path' => 'images/外出メイクアップセット.jpg',
-            'user_id' => $users->random()->id,
+            'user_id' => 1,
             'condition' => '2',
             'name' => 'メイクセット',
             'brand' => 'canmaketokyo',
