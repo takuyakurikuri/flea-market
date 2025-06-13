@@ -10,7 +10,7 @@ class TransactionController extends Controller
 {
     public function show(Purchase $purchase)
 {
-    $this->authorize('view', $purchase); // ポリシーでアクセス制限
+    $this->authorize('view', $purchase); // ポリシー
 
     $user = Auth::user();
     $item = $purchase->item;
@@ -21,7 +21,7 @@ class TransactionController extends Controller
         ? $item->user  // 出品者
         : $purchase->user; // 購入者
 
-    return view('chat.show', compact('purchase', 'item', 'chats', 'partner', 'user'));
+    return view('chat', compact('purchase', 'item', 'chats', 'partner', 'user'));
 }
 
 public function sendChat(Request $request, Purchase $purchase)

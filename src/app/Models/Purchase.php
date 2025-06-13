@@ -18,7 +18,7 @@ class Purchase extends Model
     ];
 
     public function item(){
-        return $this->hasOne(item::class);
+        return $this->belongsTo(item::class);
     }
 
     public function user(){

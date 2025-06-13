@@ -27,7 +27,7 @@ Route::middleware('auth','verified')->group(function(){
     Route::get('/cancel', [StripeController::class, 'cancel'])->name('checkout.cancel');
     Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
     Route::patch('/mypage/profile',[AuthController::class,'modifyProfile']);
-    Route::get('/chat/{purchase}', [TransactionController::class, 'show']);
+    Route::get('/chat/{purchase}', [TransactionController::class, 'show'])->name('chat.show');
     Route::post('/chat/{purchase}', [TransactionController::class, 'sendChat']);
 });
 

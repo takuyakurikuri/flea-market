@@ -49,22 +49,43 @@
         </div>
 
         <div class="row row-cols-2 row-cols-md-4 g-3 mt-3">
-            @foreach ($items as $item)
-                <div class="col">
-                    <a href="/item/{{$item->id}}" class="text-decoration-none text-dark">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="{{ asset('storage/' . $item->image_path) }}"
-                                alt="{{ $item->name }}">
-                            @if ($item->purchases->isNotEmpty())
-                                <img class="soldout-overlay" src="{{ asset('images/soldout.png') }}" alt="soldout">
-                            @endif
-                            <div class="card-body text-center">
-                                <p class="card-text">{{ $item->name }}</p>
+            @if (request('tab') == 'trading')
+                @foreach ($items as $item)
+                    @php
+                        $relatedPurchase = $item->purchases->firstWhere('user_id', $user->id)
+                            ?? $item->purchases->first();
+                    @endphp
+                    <div class="col">
+                        <a href="{{ route('chat.show', ['purchase' => $relatedPurchase->id]) }}" class="text-decoration-none text-dark">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="{{ asset('storage/' . $item->image_path) }}"
+                                    alt="{{ $item->name }}">
+                                <div class="card-body text-center">
+                                    <p class="card-text">{{ $item->name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
+                        </a>
+                    </div>
+                @endforeach
+            @else
+                @foreach ($items as $item)
+                    <div class="col">
+                        <a href="/item/{{$item->id}}" class="text-decoration-none text-dark">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="{{ asset('storage/' . $item->image_path) }}"
+                                    alt="{{ $item->name }}">
+                                @if ($item->purchases->isNotEmpty())
+                                    <img class="soldout-overlay" src="{{ asset('images/soldout.png') }}" alt="soldout">
+                                @endif
+                                <div class="card-body text-center">
+                                    <p class="card-text">{{ $item->name }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            @endif
+            
         </div>
     </div>
 @endsection

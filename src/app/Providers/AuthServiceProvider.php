@@ -6,6 +6,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\URL;
+use App\Models\Purchase;
+use App\Policies\PurchasePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Purchase::class => PurchasePolicy::class,
     ];
 
     /**
