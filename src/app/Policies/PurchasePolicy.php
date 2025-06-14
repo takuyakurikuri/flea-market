@@ -42,7 +42,7 @@ class PurchasePolicy
      */
     public function create(User $user)
     {
-        //
+        
     }
 
     /**

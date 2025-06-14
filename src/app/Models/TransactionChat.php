@@ -13,6 +13,7 @@ class TransactionChat extends Model
         'purchase_id',
         'user_id',
         'message',
+        'image_path',
     ];
 
     public function purchase()

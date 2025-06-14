@@ -22,7 +22,7 @@ class Item extends Model
     ];
 
     public function exhibitor(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function category_item(){

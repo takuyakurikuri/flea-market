@@ -28,7 +28,7 @@ Route::middleware('auth','verified')->group(function(){
     Route::post('/mypage/profile',[AuthController::class,'profileRegister']);
     Route::patch('/mypage/profile',[AuthController::class,'modifyProfile']);
     Route::get('/chat/{purchase}', [TransactionController::class, 'show'])->name('chat.show');
-    Route::post('/chat/{purchase}', [TransactionController::class, 'sendChat']);
+    Route::post('/chat/{purchase}', [TransactionController::class, 'sendChat'])->name('chat.send');
 });
 
 Route::get('/',[ItemController::class, 'index']);
