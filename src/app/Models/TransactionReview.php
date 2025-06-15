@@ -14,7 +14,6 @@ class TransactionReview extends Model
         'reviewer_id',
         'reviewee_id',
         'rating',
-        'comment',
     ];
 
     public function purchase()

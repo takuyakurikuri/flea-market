@@ -19,7 +19,6 @@ class CreateTransactionReviewsTable extends Migration
             $table->foreignId('reviewer_id')->constrained('users')->cascadeOnDelete(); // 評価する側
             $table->foreignId('reviewee_id')->constrained('users')->cascadeOnDelete(); // 評価される側
             $table->integer('rating');
-    $table->text('comment')->nullable();
 
             $table->timestamps();
         });

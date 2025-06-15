@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-<aside>
+{{-- <aside>
     <h3>その他の取引</h3>
     @foreach ($listItems as $listItem)
         @php
@@ -33,21 +33,6 @@
         <p>{{$item->name}}</p>
         <p class="text-danger">￥{{ number_format($item->price) }}（税込）</p>
     </div>
-    {{-- <div class="d-flex">
-        @foreach ($chats as $chat)
-        <div class="{{$chat->user->id === Auth::id() ? 'justify-content-end' : 'justify-content-start'}}">
-            <form action="" method="post">
-                @method('fetch')
-                <input type="text" value="{{$chat->message}}">
-                <button type="submit">編集</button>
-            </form>
-            <form action="" method="post">
-                <input type="hidden" name="chat_id" value="{{$chat->id}}">
-                <button type="submit">削除</button>
-            </form>
-        </div>
-        @endforeach
-    </div> --}}
 
     @foreach ($chats as $chat)
         <div class="d-flex {{ $chat->user->id === Auth::id() ? 'justify-content-end' : 'justify-content-start' }} mb-2">
@@ -82,5 +67,149 @@
         <input type="text" name="message">
         <button type="submit">送信</button>
     </form>
+</div> --}}
+
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-12 col-md-3 bg-secondary text-white p-3 sidebar">
+            <h5>その他の取引</h5>
+            @foreach ($listItems as $listItem)
+                @php
+                    $relatedPurchase = $listItem->purchases->firstWhere('user_id', $user->id)
+                        ?? $listItem->purchases->first();
+                @endphp
+                <div class="mt-2">
+                    <a href="{{ route('chat.show', ['purchase' => $relatedPurchase->id]) }}" class="text-white text-decoration-none">
+                        <p class="mb-0">{{ $listItem->name }}</p>
+                    </a>
+                </div>
+            @endforeach
+        </aside>
+
+        <main class="col-12 col-md-9 p-3">
+            <div class="d-flex justify-content-between">
+                <h4 class="">{{ $partner->name }}さんとの取引</h4>
+                @if ($purchase->user_id === Auth::id() && $purchase->status !== 'completed')
+                    <form action="{{route('transaction.completed',['purchase' => $purchase])}}" method="post">
+                        @csrf
+                        @method('patch')
+                        <button type="submit">取引を終了する</button>
+                    </form>
+
+                @elseif($purchase->status === 'completed')
+                    <p>取引が完了しました</p>
+                @endif
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center border p-3 mb-4">
+                <img src="{{ asset('storage/' . $item->image_path) }}" class="img-thumbnail me-3" alt="{{ $item->name }}" style="max-width: 150px;">
+                <div>
+                    <h5 class="mb-2">{{ $item->name }}</h5>
+                    <p class="text-danger mb-0">￥{{ number_format($item->price) }}（税込）</p>
+                </div>
+            </div>
+
+            @foreach ($chats as $chat)
+                <div class="chat-message mb-4 {{ $chat->user->id === Auth::id() ? 'text-end' : 'text-start' }}">
+                    <div class="d-flex {{ $chat->user->id === Auth::id() ? 'flex-row-reverse' : '' }} align-items-center">
+                        <img src="{{ asset('storage/' . $chat->user->image_path) }}"
+                            alt="画像なし"
+                            class="user-icon rounded-circle border me-2"
+                            width="50" height="50">
+                        <div class="user-name">{{ $chat->user->name }}</div>
+                    </div>
+
+                    <div class="d-flex {{ $chat->user->id === Auth::id() ? 'flex-row-reverse' : '' }} mt-1">
+                        <div class="message-content">
+                            <div class="chat-bubble p-2 rounded {{ $chat->user->id === Auth::id() ? 'text-white' : 'bg-light' }}">
+                                @if ($chat->user->id === Auth::id())
+                                    <form action="" method="post" class="d-inline">
+                                        @csrf
+                                        @method('fetch')
+                                        <input type="text" name="message" value="{{ $chat->message }}" class="form-control mb-2">
+                                    </form>
+                                @else
+                                    <p class="mb-0">{{ $chat->message }}</p>
+                                @endif
+
+                            </div>
+
+                            @if ($chat->user->id === Auth::id())
+                                <div class="text-end mt-1">
+                                    <form action="" method="post" class="d-inline">
+                                        @csrf
+                                        @method('fetch')
+                                        <button type="submit" class="btn btn-sm btn-light">編集</button>
+                                    </form>
+                                    <form action="{{route('chat.delete',['purchase'=>$purchase,'chat'=>$chat])}}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="chat_id" value="{{ $chat->id }}">
+                                        <button type="submit" class="btn btn-sm btn-danger">削除</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+
+            @error('message')
+                {{$message}}
+            @enderror
+            @error('image_path')
+                {{$message}}
+            @enderror
+            <form action="{{ route('chat.send', ['purchase' => $purchase]) }}" method="post" enctype="multipart/form-data" class="d-flex flex-wrap align-items-center mt-4">
+                @csrf
+                <input type="text" name="message" class="form-control me-2 mb-2 flex-grow-1" placeholder="取引メッセージを記入してください">
+                <label for="image_path" class="btn btn-outline-danger ms-5">画像を追加</label>
+                <input type="file" name="image_path" accept="image/*" class="form-control d-none" id="image_path">
+                <button type="submit" class="btn btn-primary mb-2">送信</button>
+            </form>
+        </main>
+    </div>
 </div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="POST" action="{{ route('review.store') }}">
+            @csrf
+            <input type="hidden" name="purchase_id" value="{{ $purchase->id }}">
+            <input type="hidden" name="reviewer_id" value="{{ auth()->id() }}">
+            <input type="hidden" name="reviewee_id" value="{{ $partner->id }}">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">取引が完了しました。</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <label>今回の取引相手はどうでしたか？</label>
+                    <br>
+                    <div class="star-rating mb-3">
+                        @for ($i = 5; $i >= 1; $i--)
+                            <input type="radio" name="rating" id="rating{{ $i }}" value="{{ $i }}" required>
+                            <label for="rating{{ $i }}">★</label>
+                        @endfor
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">送信する</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if ($shouldShowModal)
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var reviewModal = new bootstrap.Modal(document.getElementById('reviewModal'));
+            reviewModal.show();
+        });
+    </script>
+@endif
+
 @endsection

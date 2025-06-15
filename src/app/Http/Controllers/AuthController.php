@@ -28,6 +28,7 @@ use App\Models\Purchase;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\AddressRequest;
+use App\Models\TransactionReview;
 
 class AuthController extends Controller
 {
@@ -171,6 +172,8 @@ class AuthController extends Controller
     public function mypage(Request $request){
         $user = Auth::user();
 
+        $avgRating = TransactionReview::where('reviewee_id', $user->id)->avg('rating');
+
         switch ($request->tab) {
             case 'buy':
                 $items = $user->purchasedItems;
@@ -194,7 +197,7 @@ class AuthController extends Controller
                 $items = Item::where('user_id', $user->id)->get();
         }
 
-        return view('mypage', compact('items', 'user'));
+        return view('mypage', compact('items', 'user','avgRating'));
     }
 
     // public function mypage(Request $request){

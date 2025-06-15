@@ -28,7 +28,18 @@
         <div class="d-flex justify-content-center align-items-center gap-3">
             <img src="{{ asset('storage/' . $user->image_path) }}" alt="画像なし" class="rounded-circle"
                 width="100" height="100">
-            <h2 class="user-name mb-0">{{ $user->name }}</h2>
+            <div>
+                <h2 class="user-name mb-0">{{ $user->name }}</h2>
+                @php
+                    $rounded = round($avgRating);
+                @endphp
+
+                <div class="star-display">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <span style="color: {{ $i <= $rounded ? '#f5b301' : '#ccc' }}; font-size: 1.5rem;">★</span>
+                    @endfor
+                </div>
+            </div>
             <pre>     </pre>
             <a href="/mypage/profile" class="btn btn-outline-danger">プロフィールを編集</a>
         </div>

@@ -24,7 +24,7 @@ class ChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'image_path'=>['mimes:jpg,png'],
+            'image_path'=>['nullable','mimes:jpg,png'],
             'message'=>['required','max:400'],
         ];
     }

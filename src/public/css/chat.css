@@ -1,0 +1,51 @@
+.user-icon {
+    border: 2px solid #ccc;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.chat-message {
+    position: relative;
+}
+
+.message-content {
+    max-width: 70%;
+}
+
+.chat-bubble {
+    border-radius: 1rem;
+}
+
+.chat-message.text-end .user-name {
+    margin-right: 8px;
+    margin-left: 0;
+}
+
+.chat-message.text-end .text-end {
+    text-align: right;
+}
+
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f5b301;
+}

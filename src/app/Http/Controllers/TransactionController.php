@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\TransactionChat;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TransactionCompleted;
+use App\Models\TransactionReview;
 
 class TransactionController extends Controller
 {
@@ -35,7 +39,9 @@ class TransactionController extends Controller
             ? $item->exhibitor // 出品者
             : $purchase->user; // 購入者
 
-        return view('chat', compact('purchase', 'item', 'chats', 'partner', 'user','listItems'));
+        $shouldShowModal = $purchase->status ==='completed' && $purchase->reviews->where('reviewer_id',auth()->id())->isEmpty();
+
+        return view('chat', compact('purchase', 'item', 'chats', 'partner', 'user','listItems','shouldShowModal'));
     }
 
     public function sendChat(ChatRequest $request, Purchase $purchase)
@@ -48,6 +54,37 @@ class TransactionController extends Controller
                 'message' => $request->message,
                 //'image_path' => $request->image_path,
             ]);
+            return back();
+        }
+
+        public function transactionCompleted(Purchase $purchase){
+
+            $this->authorize('view', $purchase);
+            
+            $purchase->update([
+                'status' => 'completed',
+            ]);
+
+            $seller = $purchase->user;
+            Mail::to($seller->email)->send(new transactionCompleted($purchase));
+
+            return redirect()->route('chat.show', $purchase);
+        }
+
+        public function storeReview(Request $request)
+        {
+            TransactionReview::create($request->only([
+                'purchase_id', 'reviewer_id', 'reviewee_id', 'rating',
+            ]));
+
+            return redirect('/mypage')->with('success', '評価を送信しました');
+        }
+
+        public function deleteChat(Purchase $purchase, TransactionChat $chat){
+
+            $this->authorize('view', $purchase);
+
+            $chat->delete();
             return back();
         }
 }
