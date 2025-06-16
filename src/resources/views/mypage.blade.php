@@ -55,7 +55,12 @@
             </form>
             <form action="/mypage" method="get">
                 <input type="hidden" name="tab" value="trading">
-                <button class="btn btn-link text-decoration-none {{ request('tab') === 'trading' ? 'text-danger' : '' }}">取引中の商品</button>
+                <button class="btn btn-link text-decoration-none {{ request('tab') === 'trading' ? 'text-danger' : '' }}">
+                    取引中の商品
+                    @if ($totalUnreadCount > 0)
+                        <span class="badge bg-danger">{{ $totalUnreadCount }}</span>
+                    @endif
+                </button>
             </form>
         </div>
 
@@ -74,6 +79,12 @@
                                 <div class="card-body text-center">
                                     <p class="card-text">{{ $item->name }}</p>
                                 </div>
+                                {{-- 未読メッセージ数を表示 --}}
+                                @if (!empty($relatedPurchase->unread_count) && $relatedPurchase->unread_count > 0)
+                                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                                        {{ $relatedPurchase->unread_count }}
+                                    </span>
+                                @endif
                             </div>
                         </a>
                     </div>

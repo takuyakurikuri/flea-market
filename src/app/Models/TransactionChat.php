@@ -14,6 +14,7 @@ class TransactionChat extends Model
         'user_id',
         'message',
         'image_path',
+        'read_at',
     ];
 
     public function purchase()

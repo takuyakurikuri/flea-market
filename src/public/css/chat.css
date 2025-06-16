@@ -49,3 +49,7 @@
 .star-rating label:hover ~ label {
     color: #f5b301;
 }
+
+.nowrap {
+    white-space: nowrap;
+}

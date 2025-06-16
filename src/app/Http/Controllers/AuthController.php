@@ -189,7 +189,15 @@ class AuthController extends Controller
                           $q->where('user_id', $user->id);
                       });
             })
-            ->with('purchases')
+            // ->with('purchases')
+            ->with(['purchases' => function ($query) use ($user) {
+                $query->withCount([
+                    'chats as unread_count' => function ($q) use ($user) {
+                        $q->where('user_id', '!=', $user->id)
+                          ->whereNull('read_at');
+                    }
+                ]);
+            }])
             ->get();
             break;
 
@@ -197,7 +205,22 @@ class AuthController extends Controller
                 $items = Item::where('user_id', $user->id)->get();
         }
 
-        return view('mypage', compact('items', 'user','avgRating'));
+        $totalUnreadCount = 0;
+
+        $totalUnreadCount = \App\Models\TransactionChat::whereHas('purchase', function ($query) use ($user) {
+            $query->where('status', '!=', 'completed')
+                  ->where(function ($q) use ($user) {
+                      $q->where('user_id', $user->id)
+                        ->orWhereHas('item', function ($q2) use ($user) {
+                            $q2->where('user_id', $user->id);
+                        });
+                  });
+        })
+        ->where('user_id', '!=', $user->id)
+        ->whereNull('read_at')
+        ->count();
+
+        return view('mypage', compact('items', 'user','avgRating','totalUnreadCount'));
     }
 
     // public function mypage(Request $request){
