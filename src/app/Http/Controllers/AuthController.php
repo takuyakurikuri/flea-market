@@ -183,15 +183,18 @@ class AuthController extends Controller
             // 出品も購入も両方の立場で、未完了（進行中）の取引を取得
             $items = Item::whereHas('purchases', function ($query) {
                 $query->where('status', '!=', 'completed');
-            })->where(function ($query) use ($user) {
+            })
+            ->where(function ($query) use ($user) {
                 $query->where('user_id', $user->id)
                       ->orWhereHas('purchases', function ($q) use ($user) {
                           $q->where('user_id', $user->id);
                       });
             })
-            // ->with('purchases')
             ->with(['purchases' => function ($query) use ($user) {
-                $query->withCount([
+                $query->with(['chats' => function ($q) {
+                    $q->latest(); 
+                }])
+                ->withCount([
                     'chats as unread_count' => function ($q) use ($user) {
                         $q->where('user_id', '!=', $user->id)
                           ->whereNull('read_at');
@@ -199,6 +202,14 @@ class AuthController extends Controller
                 ]);
             }])
             ->get();
+
+            // purchase の中の最新チャット日時を取得して並べ替え
+            $items = $items->sortByDesc(function ($item) use ($user) {
+                $relatedPurchase = $item->purchases->firstWhere('user_id', $user->id)
+                    ?? $item->purchases->first();
+
+                return optional($relatedPurchase->chats->first())->created_at;
+            });
             break;
 
             default:

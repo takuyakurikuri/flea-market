@@ -12,62 +12,6 @@
 @endsection
 
 @section('content')
-{{-- <aside>
-    <h3>その他の取引</h3>
-    @foreach ($listItems as $listItem)
-        @php
-            $relatedPurchase = $listItem->purchases->firstWhere('user_id', $user->id)
-                ?? $listItem->purchases->first();
-        @endphp
-        <div class="col">
-            <a href="{{ route('chat.show', ['purchase' => $relatedPurchase->id]) }}" class="">
-                <p class="">{{ $listItem->name }}</p>
-            </a>
-        </div>
-    @endforeach
-</aside>
-<div class="container">
-    <h2>{{$partner->name . 'さんとの取引'}}</h2>
-    <div>
-        <img class="card-img-top p-2" src="{{ asset('storage/' . $item->image_path) }}" alt="{{$item->name}}">
-        <p>{{$item->name}}</p>
-        <p class="text-danger">￥{{ number_format($item->price) }}（税込）</p>
-    </div>
-
-    @foreach ($chats as $chat)
-        <div class="d-flex {{ $chat->user->id === Auth::id() ? 'justify-content-end' : 'justify-content-start' }} mb-2">
-            <img src="{{ asset('storage/' . $chat->user->image_path) }}" alt="画像なし" class="rounded-circle"
-                width="100" height="100">
-            <div class="p-2 rounded {{ $chat->user->id === Auth::id() ? 'bg-primary text-white' : 'bg-light' }}">
-                <div>{{ $chat->user->name }}</div>
-
-                @if ($chat->user->id === Auth::id())
-                    <form action="" method="post" class="d-inline">
-                        @csrf
-                        @method('fetch')
-                        <input type="text" name="message" value="{{ $chat->message }}">
-                        <button type="submit" class="btn btn-sm btn-light">編集</button>
-                    </form>
-
-                    <form action="" method="post" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="chat_id" value="{{ $chat->id }}">
-                        <button type="submit" class="btn btn-sm btn-danger">削除</button>
-                    </form>
-
-                @else
-                    <p>{{ $chat->message }}</p>
-                @endif
-            </div>
-        </div>
-    @endforeach
-    <form action="{{route('chat.send', ['purchase' => $purchase])}}" method="post">
-        @csrf
-        <input type="text" name="message">
-        <button type="submit">送信</button>
-    </form>
-</div> --}}
 
 <div class="container-fluid">
     <div class="row">
@@ -123,10 +67,6 @@
                         <div class="message-content">
                             <div class="chat-bubble p-2 rounded {{ $chat->user->id === Auth::id() ? 'text-white bg-success-subtle' : 'bg-light' }}">
                                 @if ($chat->user->id === Auth::id())
-                                    {{-- <form action="" method="post" class="d-inline">
-                                        @csrf
-                                        <input type="text" name="message" value="{{ $chat->message }}" class="form-control mb-2">
-                                    </form> --}}
                                     <p class="text-start text-body mb-0">{{ $chat->message }}</p>
                                     @if ($chat->image_path)
                                         <img src="{{ asset('storage/' . $chat->image_path) }}" class="rounded" alt="{{ $chat->name }}" style="max-width: 200px;">
@@ -145,7 +85,6 @@
                                     <form action="{{route('chat.correct',['purchase'=>$purchase,'chat'=>$chat])}}" method="post" class="d-inline">
                                         @csrf
                                         @method('patch')
-                                        {{-- <button type="submit" class="btn btn-sm btn-light">編集</button> --}}
                                         <button type="button" class="btn btn-sm btn-light"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editChatModal"
@@ -176,24 +115,15 @@
             @error('image_path')
                 {{$message}}
             @enderror
-            {{-- <form action="{{ route('chat.send', ['purchase' => $purchase]) }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center w-100 mt-4">
-                @csrf
-                <input type="text" name="message" class="form-control flex-grow-1 me-2" placeholder="取引メッセージを記入してください">
-            
-                <div class="ms-2">
-                    <label for="image_path" class="btn btn-outline-danger">画像を追加</label>
-                    <input type="file" name="image_path" accept="image/*" class="d-none" id="image_path">
-                </div>
-            
-                <button type="submit" class="btn btn-primary ms-2">送信</button>
-            </form> --}}
+
             <form action="{{ route('chat.send', ['purchase' => $purchase]) }}"
                 method="post"
                 enctype="multipart/form-data"
-                class="row gx-2 gy-2 align-items-center mt-4">
+                class="row gx-2 gy-2 align-items-center mt-4"
+                id="chat-form">
                 @csrf
                 <div class="col-12 col-md">
-                    <input type="text" name="message" class="form-control" placeholder="取引メッセージを記入してください">
+                    <input type="text" name="message" id="message-input" class="form-control" placeholder="取引メッセージを記入してください">
                 </div>
             
                 <div class="col-auto">
@@ -297,15 +227,12 @@
             const image = button.getAttribute('data-image');
             const updateUrl = button.getAttribute('data-update-url');
     
-            // フォームのactionを更新
             const form = document.getElementById('editChatForm');
             form.action = updateUrl;
     
-            // hidden入力とテキストをセット
             document.getElementById('editChatId').value = chatId;
             document.getElementById('editMessage').value = message;
     
-            // 画像がある場合はプレビュー
             const preview = document.getElementById('currentImagePreview');
             if (image) {
                 preview.src = image;
@@ -315,6 +242,32 @@
             }
         });
     });
-    </script>
+
+    window.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+
+        if (!form || !messageInput) return;
+
+        messageInput.addEventListener('input', function () {
+            localStorage.setItem('chat_message_draft', this.value);
+        });
+
+        const savedMessage = localStorage.getItem('chat_message_draft');
+        if (savedMessage !== null) {
+            messageInput.value = savedMessage;
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            localStorage.removeItem('chat_message_draft');
+
+            setTimeout(() => {
+                form.submit();
+            }, 100);
+        });
+    });
+
+</script>
 
 @endsection
