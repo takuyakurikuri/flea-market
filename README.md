@@ -1,6 +1,6 @@
-フリーマーケットアプリ 環境構築
+フリーマーケットアプリ 環境構築  
 
-**Docker ビルド**
+**Docker ビルド**  
 git clone git@github.com:takuyakurikuri/flea-market.git  
 docker-compose up -d --build  
 
@@ -15,7 +15,7 @@ php artisan migrate
 php artisan storage:link  
 php artisan db:seed  
 
-**ダミーデータ情報**
+**ダミーデータ情報**  
 userId:testuser01@example.com  
 pass:password  
 CO01〜CO05までの商品データの出品をしています。
