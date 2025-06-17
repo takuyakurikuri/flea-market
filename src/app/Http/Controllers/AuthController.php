@@ -29,6 +29,7 @@ use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\AddressRequest;
 use App\Models\TransactionReview;
+use App\Models\TransactionChat;
 
 class AuthController extends Controller
 {
@@ -180,15 +181,12 @@ class AuthController extends Controller
                 break;
 
             case 'trading':
-            // 出品も購入も両方の立場で、未完了（進行中）の取引を取得
-            $items = Item::whereHas('purchases', function ($query) {
-                $query->where('status', '!=', 'completed');
-            })
+            $items = Item::whereHas('purchases') // ← 条件を緩和
             ->where(function ($query) use ($user) {
                 $query->where('user_id', $user->id)
-                      ->orWhereHas('purchases', function ($q) use ($user) {
-                          $q->where('user_id', $user->id);
-                      });
+                    ->orWhereHas('purchases', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
             })
             ->with(['purchases' => function ($query) use ($user) {
                 $query->with(['chats' => function ($q) {
@@ -197,7 +195,7 @@ class AuthController extends Controller
                 ->withCount([
                     'chats as unread_count' => function ($q) use ($user) {
                         $q->where('user_id', '!=', $user->id)
-                          ->whereNull('read_at');
+                        ->whereNull('read_at');
                     }
                 ]);
             }])
@@ -218,7 +216,7 @@ class AuthController extends Controller
 
         $totalUnreadCount = 0;
 
-        $totalUnreadCount = \App\Models\TransactionChat::whereHas('purchase', function ($query) use ($user) {
+        $totalUnreadCount = TransactionChat::whereHas('purchase', function ($query) use ($user) {
             $query->where('status', '!=', 'completed')
                   ->where(function ($q) use ($user) {
                       $q->where('user_id', $user->id)
@@ -233,18 +231,5 @@ class AuthController extends Controller
 
         return view('mypage', compact('items', 'user','avgRating','totalUnreadCount'));
     }
-
-    // public function mypage(Request $request){
-    //     if($request->tab == 'buy' && Auth::check()){
-    //         $user = Auth::user();
-    //         $user = auth()->user();
-    //         $items = $user->purchasedItems;
-    //     }
-    //     else{
-    //         $user = Auth::user();
-    //         $items = Item::where('user_id',$user->id)->get();
-    //     }
-    //     return view('mypage' ,compact('items','user'));
-    // }
 
 }

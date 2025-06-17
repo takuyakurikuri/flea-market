@@ -26,7 +26,9 @@ CO06〜CO10までの商品データの出品をしています。
 
 userId:testuser03@example.com  
 pass:password  
-何も紐付けていないユーザーです。
+何も紐付けていないユーザーです。  
+
+※プロフィール画像はsample画像フォルダにあります。3つのjpgファイルを"src/storage/app/public/images"に格納ください。  
 
 **データベースの接続設定**  
 env ファイルの環境変数は以下に設定ください。  

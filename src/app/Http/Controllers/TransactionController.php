@@ -23,10 +23,7 @@ class TransactionController extends Controller
         $item = $purchase->item()->with('exhibitor')->first(); 
         $chats = $purchase->chats()->with('user')->oldest()->get();
 
-
-        $listItems = Item::whereHas('purchases', function ($query) {
-            $query->where('status', '!=', 'completed');
-        })->where(function ($query) use ($user) {
+        $listItems = Item::whereHas('purchases')->where(function ($query) use ($user) {
             $query->where('user_id', $user->id)
                   ->orWhereHas('purchases', function ($q) use ($user) {
                       $q->where('user_id', $user->id);
@@ -104,6 +101,8 @@ class TransactionController extends Controller
         
         public function correctChat(Request $request, Purchase $purchase, TransactionChat $chat)
         {
+
+            $this->authorize('view', $purchase);
 
             $chat->message = $request->message;
 

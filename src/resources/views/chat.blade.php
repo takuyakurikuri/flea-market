@@ -31,13 +31,19 @@
         </aside>
 
         <main class="col-12 col-md-9 p-3">
-            <div class="d-flex justify-content-between mb-4">
-                <h4 class="mt-2 fw-bold">「{{ $partner->name }}」さんとの取引</h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <img src="{{ asset('storage/' . $partner->image_path) }}"
+                                alt="画像なし"
+                                class="user-icon rounded-circle border me-2"
+                                width="70" height="70">
+                    <h1 class="mt-2 fs-5 fw-bold h-50">「{{ $partner->name }}」さんとの取引画面</h1>
+                </div>
                 @if ($purchase->user_id === Auth::id() && $purchase->status !== 'completed')
                     <form action="{{route('transaction.completed',['purchase' => $purchase])}}" method="post">
                         @csrf
                         @method('patch')
-                        <button type="submit" class="btn btn-danger">取引を終了する</button>
+                        <button type="submit" class="btn btn-danger">取引を完了する</button>
                     </form>
 
                 @elseif($purchase->status === 'completed')
@@ -163,7 +169,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">送信する</button>
+                    <button type="submit" class="btn btn-danger">送信する</button>
                 </div>
             </div>
         </form>
